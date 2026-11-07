@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AK SPORTS homepage layout</title>
+<style>
+:root{--bg:#faf9f6;--card:#efede8;--ink:#161616;--mute:#6b6b66;--line:#dcdad3;--acc:#0f6b4a;--onacc:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141413;--card:#1f1f1d;--ink:#f2f1ec;--mute:#a3a29b;--line:#34342f;--acc:#3fbf8f;--onacc:#0b0b0b}}
+:root[data-theme="dark"]{--bg:#141413;--card:#1f1f1d;--ink:#f2f1ec;--mute:#a3a29b;--line:#34342f;--acc:#3fbf8f;--onacc:#0b0b0b}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:1000px;margin:0 auto;padding:0 20px}
+.note{font-size:12px;color:var(--mute);text-align:center;padding:10px 20px}
+.bar{background:var(--ink);color:var(--bg);text-align:center;font-size:13px;padding:8px}
+header{border-bottom:1px solid var(--line)}
+header .w{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.logo{font-weight:600;letter-spacing:2px}
+nav{display:flex;gap:22px;color:var(--mute);font-size:14px;overflow-x:auto}
+.ic{display:flex;gap:14px;color:var(--mute);font-size:14px;white-space:nowrap}
+.hero{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.half{background:var(--card);min-height:340px;padding:32px 28px;display:flex;flex-direction:column;justify-content:flex-end;transition:flex .3s}
+.half+.half{border-left:1px solid var(--line)}
+.ph{font-size:12px;color:var(--mute);margin-bottom:8px}
+h1,h2{margin:0;font-weight:600}
+h1{font-size:28px}
+h2{font-size:18px}
+.sub{color:var(--mute);margin:4px 0 14px}
+.btn{display:inline-block;align-self:flex-start;background:var(--acc);color:var(--onacc);padding:10px 20px;border-radius:6px;font-size:14px;font-weight:500}
+.btn.o{background:none;color:var(--ink);border:1px solid var(--ink)}
+.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:28px 0 8px}
+.cat{border:1px solid var(--line);border-radius:8px;padding:18px 12px;text-align:center;font-size:14px}
+.sec{display:flex;justify-content:space-between;align-items:baseline;padding:28px 0 12px}
+.sec a{color:var(--mute);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.p .img{background:var(--card);aspect-ratio:1;border-radius:8px;position:relative}
+.p .img.t{aspect-ratio:4/5}
+.tag{position:absolute;top:8px;left:8px;background:var(--acc);color:var(--onacc);font-size:11px;padding:2px 8px;border-radius:4px}
+.p b{display:block;margin-top:8px;font-weight:500;font-size:14px}
+.p span{color:var(--mute);font-size:14px}
+.p s{color:var(--mute);font-size:12px;margin-left:6px}
+.p .add{margin-top:8px;border:1px solid var(--line);border-radius:6px;text-align:center;font-size:13px;padding:6px}
+.trust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;margin-top:32px;text-align:center;font-size:14px}
+.trust b{display:block;font-weight:500}
+.trust span{color:var(--mute);font-size:13px}
+.rev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.rv{background:var(--card);border-radius:8px;padding:16px;font-size:14px;color:var(--mute)}
+.soc{background:var(--card);text-align:center;padding:28px 20px;margin-top:32px}
+footer{border-top:1px solid var(--line);margin-top:0;padding:22px 0;color:var(--mute);font-size:13px}
+footer .w{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.sticky{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:10px 20px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;justify-content:center;font-size:13px}
+.sticky .btn{padding:9px 16px}
+@media (max-width:640px){.hero{grid-template-columns:1fr}.half+.half{border-left:0;border-top:1px solid var(--line)}.cats,.grid,.trust{grid-template-columns:repeat(2,minmax(0,1fr))}.rev{grid-template-columns:1fr}nav{display:none}}
+</style>
+</head>
+<body>
+<div class="note">Rough layout only. Grey boxes are where your photos go. Resize the window to see the phone version.</div>
+<div class="bar">Free delivery over Rs. 3,000 &middot; Cash on delivery &middot; Order on WhatsApp</div>
+<header><div class="w"><span class="logo">AK SPORTS</span><nav><span>Cricket</span><span>Clothing</span><span>New</span><span>Sale</span><span>About</span><span>Contact</span></nav><span class="ic"><span>Search</span><span>Cart (0)</span></span></div></header>
+
+<section class="hero">
+<div class="half"><div class="ph">[ photo: tape ball bat and ball ]</div><h1>Cricket gear</h1><p class="sub">Tape ball bats, balls and kits</p><span class="btn">Shop cricket</span></div>
+<div class="half"><div class="ph">[ photo: clothing flat-lay ]</div><h1>Clothing</h1><p class="sub">Good quality, small price</p><span class="btn o">Shop clothing</span></div>
+</section>
+
+<div class="w">
+<div class="cats"><div class="cat">Bats</div><div class="cat">Tape balls</div><div class="cat">Kits and gloves</div><div class="cat">Men and kids wear</div></div>
+
+<div class="sec"><h2>Cricket bestsellers</h2><a>View all &rarr;</a></div>
+<div class="grid">
+<div class="p"><div class="img"><span class="tag">Best seller</span></div><b>Bat name</b><span>Rs. 0,000</span><s>Rs. 0,000</s><div class="add">Add to cart</div></div>
+<div class="p"><div class="img"></div><b>Tape ball</b><span>Rs. 000</span><div class="add">Add to cart</div></div>
+<div class="p"><div class="img"><span class="tag">Sale</span></div><b>Gloves</b><span>Rs. 0,000</span><s>Rs. 0,000</s><div class="add">Add to cart</div></div>
+<div class="p"><div class="img"></div><b>Kit item</b><span>Rs. 0,000</span><div class="add">Add to cart</div></div>
+</div>
+
+<div class="sec"><h2>Clothing picks</h2><a>View all &rarr;</a></div>
+<div class="grid">
+<div class="p"><div class="img t"><span class="tag">New</span></div><b>Item</b><span>Rs. 0,000</span><div class="add">Add to cart</div></div>
+<div class="p"><div class="img t"></div><b>Item</b><span>Rs. 0,000</span><div class="add">Add to cart</div></div>
+<div class="p"><div class="img t"><span class="tag">Sale</span></div><b>Item</b><span>Rs. 0,000</span><s>Rs. 0,000</s><div class="add">Add to cart</div></div>
+<div class="p"><div class="img t"></div><b>Item</b><span>Rs. 0,000</span><div class="add">Add to cart</div></div>
+</div>
+
+<div class="trust"><div><b>Honest prices</b><span>Shown on every product</span></div><div><b>Cash on delivery</b><span>Pay when it arrives</span></div><div><b>Easy exchange</b><span>Size or fit problem</span></div><div><b>WhatsApp support</b><span>Reply in minutes</span></div></div>
+
+<div class="sec"><h2>What customers say</h2></div>
+<div class="rev"><div class="rv">[ customer review or screenshot ]</div><div class="rv">[ customer review or screenshot ]</div><div class="rv">[ customer review or screenshot ]</div></div>
+</div>
+
+<div class="soc"><h2>Follow AK SPORTS</h2><p class="sub">Facebook and Instagram photo strip</p></div>
+<footer><div class="w"><span>AK SPORTS &middot; address &middot; phone</span><span>Cricket &middot; Clothing &middot; Shipping and returns &middot; Contact</span></div></footer>
+<div class="sticky"><span class="btn o">WhatsApp us</span><span class="btn">View cart</span></div>
+</body>
+</html>
