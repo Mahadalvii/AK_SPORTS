@@ -745,3 +745,275 @@ export async function seedDefaultCatalog(): Promise<{
     };
   }
 }
+
+// ============================================================================
+// ORDERS MANAGEMENT API
+// ============================================================================
+
+export type OrderStatus = 'pending_cod' | 'processing' | 'dispatched' | 'delivered' | 'cancelled';
+
+export interface AdminOrderItem {
+  id?: string;
+  order_id: string;
+  product_id: string;
+  variant_id?: string | null;
+  product_name: string;
+  variant_title?: string | null;
+  unit_price: number;
+  quantity: number;
+  total_price: number;
+}
+
+export interface AdminOrder {
+  id: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_address: string;
+  city: string;
+  subtotal: number;
+  delivery_fee: number;
+  total: number;
+  payment_method: string;
+  status: OrderStatus;
+  client_ip?: string | null;
+  created_at: string;
+  updated_at?: string;
+  items: AdminOrderItem[];
+}
+
+/**
+ * Format Pakistani phone number to international WhatsApp URL with pre-filled message
+ */
+export function formatWhatsAppUrl(order: AdminOrder): string {
+  const digitsOnly = order.customer_phone.replace(/[^0-9]/g, '');
+  let intlPhone = digitsOnly;
+  if (intlPhone.startsWith('03')) {
+    intlPhone = '92' + intlPhone.substring(1);
+  } else if (intlPhone.startsWith('3') && intlPhone.length === 10) {
+    intlPhone = '92' + intlPhone;
+  }
+
+  const itemsSummary = order.items
+    .map(
+      (item, idx) =>
+        `  ${idx + 1}. ${item.product_name}${item.variant_title ? ` (${item.variant_title})` : ''} x${item.quantity} = Rs. ${item.total_price.toLocaleString()}`
+    )
+    .join('\n');
+
+  const statusLabel =
+    order.status === 'pending_cod'
+      ? 'Pending Confirmation'
+      : order.status === 'processing'
+      ? 'Processing / In Packing'
+      : order.status === 'dispatched'
+      ? 'Dispatched for Delivery'
+      : order.status === 'delivered'
+      ? 'Delivered'
+      : 'Cancelled';
+
+  const message = `Salam ${order.customer_name},
+
+This is AK Sports regarding your Cash on Delivery Order #${order.id}.
+
+Order Summary:
+${itemsSummary}
+Subtotal: Rs. ${order.subtotal.toLocaleString()}
+Delivery Fee: Rs. ${order.delivery_fee.toLocaleString()}
+Total Payable: Rs. ${order.total.toLocaleString()} (Cash on Delivery)
+
+Delivery Address:
+${order.customer_address}, ${order.city}
+
+Current Status: ${statusLabel}
+
+Please reply with "CONFIRM" so our team can immediately dispatch your parcel. Thank you for choosing AK Sports!`;
+
+  return `https://wa.me/${intlPhone}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Fetch all orders with their line items
+ */
+export async function getAdminOrders(): Promise<AdminOrder[]> {
+  if (!isSupabaseConfigured() || !supabase) {
+    // Local offline mock storage fallback
+    const saved = localStorage.getItem('ak_sports_admin_mock_orders');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        // fall through to default mock
+      }
+    }
+
+    const defaultMockOrders: AdminOrder[] = [
+      {
+        id: 'AK-984210',
+        customer_name: 'Usman Tariq',
+        customer_phone: '0300-8451290',
+        customer_address: 'House 42-B, Street 7, Phase 5, DHA',
+        city: 'Lahore',
+        subtotal: 5300,
+        delivery_fee: 0,
+        total: 5300,
+        payment_method: 'cod',
+        status: 'pending_cod',
+        created_at: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+        items: [
+          {
+            order_id: 'AK-984210',
+            product_id: 'ak-apparel-pro-trousers',
+            product_name: 'AK Pro Matrix Flex Athletic Trousers',
+            variant_title: 'M (31-33")',
+            unit_price: 2650,
+            quantity: 2,
+            total_price: 5300,
+          },
+        ],
+      },
+      {
+        id: 'AK-719342',
+        customer_name: 'Hamza Malik',
+        customer_phone: '0321-4901827',
+        customer_address: 'Flat 304, Al-Ghafoor Heights, Block 13-D, Gulshan-e-Iqbal',
+        city: 'Karachi',
+        subtotal: 6800,
+        delivery_fee: 0,
+        total: 6800,
+        payment_method: 'cod',
+        status: 'processing',
+        created_at: new Date(Date.now() - 3 * 3600 * 1000).toISOString(),
+        items: [
+          {
+            order_id: 'AK-719342',
+            product_id: 'ak-bat-gold-edition',
+            product_name: 'AK Gold Edition Pro Handcrafted Bat',
+            variant_title: '35.0" Standard (820g)',
+            unit_price: 6800,
+            quantity: 1,
+            total_price: 6800,
+          },
+        ],
+      },
+      {
+        id: 'AK-562189',
+        customer_name: 'Bilal Ahmad',
+        customer_phone: '0333-5129844',
+        customer_address: 'Street 19, Sector F-8/2',
+        city: 'Islamabad',
+        subtotal: 4500,
+        delivery_fee: 0,
+        total: 4500,
+        payment_method: 'cod',
+        status: 'dispatched',
+        created_at: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+        items: [
+          {
+            order_id: 'AK-562189',
+            product_id: 'ak-apparel-oversized-tee',
+            product_name: 'AK Forged Athletics Heavy-Cotton Training Tee',
+            variant_title: 'Large',
+            unit_price: 1850,
+            quantity: 1,
+            total_price: 1850,
+          },
+          {
+            order_id: 'AK-562189',
+            product_id: 'ak-apparel-pro-trousers',
+            product_name: 'AK Pro Matrix Flex Athletic Trousers',
+            variant_title: 'L (34-36")',
+            unit_price: 2650,
+            quantity: 1,
+            total_price: 2650,
+          },
+        ],
+      },
+    ];
+
+    localStorage.setItem('ak_sports_admin_mock_orders', JSON.stringify(defaultMockOrders));
+    return defaultMockOrders;
+  }
+
+  try {
+    const { data: dbOrders, error: orderError } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (orderError || !dbOrders) {
+      console.warn('[AK Sports Admin] Error loading orders from Supabase:', orderError);
+      return [];
+    }
+
+    const { data: dbItems, error: itemsError } = await supabase
+      .from('order_items')
+      .select('*');
+
+    if (itemsError) {
+      console.warn('[AK Sports Admin] Error loading order items:', itemsError);
+    }
+
+    const itemsByOrder: Record<string, AdminOrderItem[]> = {};
+    (dbItems || []).forEach((item: any) => {
+      if (!itemsByOrder[item.order_id]) {
+        itemsByOrder[item.order_id] = [];
+      }
+      itemsByOrder[item.order_id].push({
+        id: item.id,
+        order_id: item.order_id,
+        product_id: item.product_id,
+        variant_id: item.variant_id,
+        product_name: item.product_name,
+        variant_title: item.variant_title,
+        unit_price: item.unit_price,
+        quantity: item.quantity,
+        total_price: item.total_price,
+      });
+    });
+
+    return dbOrders.map((o: any) => ({
+      id: o.id,
+      customer_name: o.customer_name,
+      customer_phone: o.customer_phone,
+      customer_address: o.customer_address,
+      city: o.city,
+      subtotal: o.subtotal,
+      delivery_fee: o.delivery_fee,
+      total: o.total,
+      payment_method: o.payment_method,
+      status: o.status,
+      client_ip: o.client_ip,
+      created_at: o.created_at,
+      updated_at: o.updated_at,
+      items: itemsByOrder[o.id] || [],
+    }));
+  } catch (err: any) {
+    console.error('[AK Sports Admin] Exception loading orders:', err);
+    return [];
+  }
+}
+
+/**
+ * Update an order's status (pending_cod, processing, dispatched, delivered, cancelled)
+ */
+export async function updateOrderStatus(
+  orderId: string,
+  newStatus: OrderStatus
+): Promise<{ success: boolean; error?: string }> {
+  if (!isSupabaseConfigured() || !supabase) {
+    const orders = await getAdminOrders();
+    const updated = orders.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o));
+    localStorage.setItem('ak_sports_admin_mock_orders', JSON.stringify(updated));
+    return { success: true };
+  }
+
+  const { error } = await supabase
+    .from('orders')
+    .update({ status: newStatus })
+    .eq('id', orderId);
+
+  if (error) {
+    return { success: false, error: error.message };
+  }
+  return { success: true };
+}

@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { 
   AdminProduct, 
+  AdminOrder,
+  OrderStatus,
   verifyAdminStatus, 
   getAdminProducts, 
   saveAdminProduct, 
   toggleProductActive, 
   deleteAdminProduct, 
-  deleteAdminVariant 
+  deleteAdminVariant,
+  getAdminOrders,
+  updateOrderStatus
 } from '../../lib/adminApi';
 import { AdminLogin } from './AdminLogin';
 import { ProductList } from './ProductList';
 import { ProductForm } from './ProductForm';
+import { OrderList } from './OrderList';
+import { OrderDetailsModal } from './OrderDetailsModal';
 import { AdminAuditModal } from './AdminAuditModal';
 import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { 
@@ -18,9 +24,11 @@ import {
   LogOut, 
   ArrowLeft, 
   Package, 
+  ShoppingBag,
   RefreshCw, 
   CheckCircle2, 
-  AlertCircle 
+  AlertCircle,
+  Clock
 } from 'lucide-react';
 
 interface AdminDashboardProps {
@@ -33,13 +41,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
   const [adminEmail, setAdminEmail] = useState<string>('');
   const [isVerifying, setIsVerifying] = useState<boolean>(true);
 
-  // View state
+  // Top Nav Tab: 'products' | 'orders'
+  const [activeNavTab, setActiveNavTab] = useState<'products' | 'orders'>('products');
+
+  // Product View state
   const [view, setView] = useState<'list' | 'create' | 'edit'>('list');
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
 
   // Products data state
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState<boolean>(false);
+
+  // Orders data state
+  const [orders, setOrders] = useState<AdminOrder[]>([]);
+  const [isLoadingOrders, setIsLoadingOrders] = useState<boolean>(false);
+  const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
+  const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
 
   // Notifications
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
@@ -75,6 +92,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
 
     if (status.isAdmin) {
       loadProducts();
+      loadOrders();
     }
   };
 
@@ -83,6 +101,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
     const data = await getAdminProducts();
     setProducts(data);
     setIsLoadingProducts(false);
+  };
+
+  const loadOrders = async () => {
+    setIsLoadingOrders(true);
+    const orderData = await getAdminOrders();
+    setOrders(orderData);
+    setIsLoadingOrders(false);
   };
 
   const showToast = (text: string, type: 'success' | 'error' = 'success') => {
@@ -97,6 +122,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
     setIsAdmin(true);
     setAdminEmail(email);
     loadProducts();
+    loadOrders();
   };
 
   const handleSignOut = async () => {
@@ -114,6 +140,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
     setAdminEmail('');
     setView('list');
     setEditingProduct(null);
+    setSelectedOrder(null);
     showToast('Signed out successfully.');
   };
 
@@ -179,6 +206,35 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
     }
     return result;
   };
+
+  // Handle Order Status Update (Approve / Dispatch / Deliver / Reject)
+  const handleUpdateOrderStatus = async (orderId: string, newStatus: OrderStatus) => {
+    setUpdatingOrderId(orderId);
+    const result = await updateOrderStatus(orderId, newStatus);
+    setUpdatingOrderId(null);
+
+    if (result.success) {
+      // Update local state
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
+      if (selectedOrder && selectedOrder.id === orderId) {
+        setSelectedOrder(prev => prev ? { ...prev, status: newStatus } : null);
+      }
+
+      const statusLabels: Record<OrderStatus, string> = {
+        pending_cod: 'Pending COD',
+        processing: 'Accepted & Processing',
+        dispatched: 'Dispatched',
+        delivered: 'Delivered',
+        cancelled: 'Cancelled / Rejected',
+      };
+      showToast(`Order #${orderId} marked as ${statusLabels[newStatus]}.`);
+    } else {
+      showToast(result.error || 'Failed to update order status.', 'error');
+    }
+  };
+
+  // Calculate pending orders count for badge
+  const pendingOrdersCount = orders.filter(o => o.status === 'pending_cod').length;
 
   // If still checking session
   if (isVerifying) {
@@ -256,6 +312,60 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
           </div>
 
         </div>
+
+        {/* Secondary Navigation Bar: Products vs Orders */}
+        <div className="border-t border-zinc-800/80 bg-zinc-900/60">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 py-2">
+            
+            {/* Products Tab */}
+            <button
+              onClick={() => setActiveNavTab('products')}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                activeNavTab === 'products'
+                  ? 'bg-[#d4af37] text-zinc-950 shadow-md'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/70'
+              }`}
+            >
+              <Package className="w-4 h-4" />
+              <span>Products Catalog</span>
+              <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                activeNavTab === 'products' ? 'bg-zinc-950/20 text-zinc-950' : 'bg-zinc-800 text-zinc-400'
+              }`}>
+                {products.length}
+              </span>
+            </button>
+
+            {/* Orders Tab */}
+            <button
+              onClick={() => setActiveNavTab('orders')}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                activeNavTab === 'orders'
+                  ? 'bg-[#d4af37] text-zinc-950 shadow-md'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/70'
+              }`}
+            >
+              <ShoppingBag className="w-4 h-4" />
+              <span>Orders Management</span>
+              {pendingOrdersCount > 0 ? (
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center gap-1 ${
+                  activeNavTab === 'orders'
+                    ? 'bg-zinc-950 text-amber-400'
+                    : 'bg-amber-500 text-zinc-950 animate-pulse'
+                }`}>
+                  <Clock className="w-3 h-3" />
+                  <span>{pendingOrdersCount} Pending</span>
+                </span>
+              ) : (
+                <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
+                  activeNavTab === 'orders' ? 'bg-zinc-950/20 text-zinc-950' : 'bg-zinc-800 text-zinc-400'
+                }`}>
+                  {orders.length}
+                </span>
+              )}
+            </button>
+
+          </div>
+        </div>
       </header>
 
       {/* Toast Notification Banner */}
@@ -280,35 +390,46 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
 
       {/* Main Workspace */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-        {view === 'list' ? (
-          <ProductList
-            products={products}
-            onAddNew={() => {
-              setEditingProduct(null);
-              setView('create');
-            }}
-            onEdit={(prod) => {
-              setEditingProduct(prod);
-              setView('edit');
-            }}
-            onToggleActive={handleToggleActive}
-            onDeleteRequest={handleDeleteProductRequest}
-            onReload={loadProducts}
-          />
+        {activeNavTab === 'products' ? (
+          view === 'list' ? (
+            <ProductList
+              products={products}
+              onAddNew={() => {
+                setEditingProduct(null);
+                setView('create');
+              }}
+              onEdit={(prod) => {
+                setEditingProduct(prod);
+                setView('edit');
+              }}
+              onToggleActive={handleToggleActive}
+              onDeleteRequest={handleDeleteProductRequest}
+              onReload={loadProducts}
+            />
+          ) : (
+            <ProductForm
+              initialProduct={editingProduct}
+              onSave={handleSaveProduct}
+              onCancel={() => {
+                setView('list');
+                setEditingProduct(null);
+              }}
+              onRequestDeleteVariant={handleDeleteVariantRequest}
+            />
+          )
         ) : (
-          <ProductForm
-            initialProduct={editingProduct}
-            onSave={handleSaveProduct}
-            onCancel={() => {
-              setView('list');
-              setEditingProduct(null);
-            }}
-            onRequestDeleteVariant={handleDeleteVariantRequest}
+          <OrderList
+            orders={orders}
+            isLoading={isLoadingOrders}
+            onRefresh={loadOrders}
+            onSelectOrder={(order) => setSelectedOrder(order)}
+            onUpdateStatus={handleUpdateOrderStatus}
+            updatingOrderId={updatingOrderId}
           />
         )}
       </main>
 
-      {/* Audit Confirmation Modal */}
+      {/* Audit Confirmation Modal for Deletions */}
       <AdminAuditModal
         isOpen={auditModal.isOpen}
         onClose={() => setAuditModal(prev => ({ ...prev, isOpen: false }))}
@@ -317,6 +438,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
         itemTitle={auditModal.itemTitle}
         itemId={auditModal.itemId}
         adminEmail={adminEmail}
+      />
+
+      {/* Order Details Modal */}
+      <OrderDetailsModal
+        order={selectedOrder}
+        isOpen={Boolean(selectedOrder)}
+        onClose={() => setSelectedOrder(null)}
+        onUpdateStatus={handleUpdateOrderStatus}
+        isUpdating={updatingOrderId === selectedOrder?.id}
       />
 
     </div>
