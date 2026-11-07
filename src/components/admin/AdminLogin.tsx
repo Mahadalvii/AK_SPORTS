@@ -83,11 +83,11 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess, onExitToStore
         
         {/* Brand Header */}
         <div className="text-center space-y-3">
-          <div className="w-16 h-16 rounded-full mx-auto p-0.5 bg-black border-2 border-[#d4af37] shadow-xl overflow-hidden flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full mx-auto p-1 bg-black border-2 border-[#d4af37] shadow-xl overflow-hidden flex items-center justify-center">
             <img 
-              src="/images/ak_sports_logo.jpg" 
+              src="/images/ak_sports_logo_centered.png" 
               alt="AK Sports Official Logo" 
-              className="w-full h-full object-cover object-center scale-135"
+              className="w-full h-full object-contain object-center"
             />
           </div>
           <div>

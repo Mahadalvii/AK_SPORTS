@@ -23,67 +23,29 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
             backgroundColor: theme.cardBg,
           }}
         >
-          {/* Main Visual: Facebook Background Banner with Centered Focal Alignment on Logo Plaque & Bat */}
-          <div className="relative w-full h-[360px] sm:h-[420px] md:h-[480px] overflow-hidden group bg-black flex items-center justify-center">
+          {/* Main Visual: Full Workshop Photo with Direct Clickable Facebook Link */}
+          <a
+            href={facebookUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="block relative w-full overflow-hidden group bg-black cursor-pointer"
+            title="Visit Official AK Sports Facebook Workshop"
+          >
             <img
               src="/images/ak_sports_background.png"
-              alt="AK Sports Workshop Background with Gold Edition Bat and Crest"
-              className="w-full h-full object-cover object-[60%_center] md:object-[62%_center] transition-transform duration-700 group-hover:scale-102"
+              alt="AK Sports Workshop with Sialkot Handcrafted Gold Edition Bat and Crest"
+              className="w-full h-auto max-h-[520px] object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
             />
-            {/* Scrims to eliminate any cut-off bat text at the right edge and ensure pristine contrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/35 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-36 sm:w-64 bg-gradient-to-l from-black via-black/85 to-transparent pointer-events-none" />
-            <div className="absolute inset-y-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-black/80 to-transparent pointer-events-none" />
 
-            {/* Top Bar inside Banner: Clickable Facebook Verification Badge */}
-            <div className="relative z-10 w-full flex items-center justify-center">
-              <a
-                href={facebookUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 hover:bg-black/85 backdrop-blur-md border border-[#d4af37]/40 text-xs font-semibold text-white transition-all hover:scale-105"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[#d4af37] font-mono tracking-wider uppercase text-[11px]">Official Facebook Workshop</span>
-                <span className="text-zinc-400">·</span>
-                <span>1.9K Followers</span>
+            {/* Clean, minimal Facebook Workshop link pill in corner */}
+            <div className="absolute bottom-4 right-4 z-10">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/75 hover:bg-black/90 backdrop-blur-md border border-[#d4af37]/60 text-xs font-semibold text-white shadow-xl transition-all duration-300 group-hover:scale-105">
+                <span className="w-2 h-2 rounded-full bg-[#d4af37]" />
+                <span className="text-[#f3e08b] font-mono text-[11px] uppercase tracking-wider">Official Facebook Page</span>
                 <ExternalLink className="w-3.5 h-3.5 text-[#d4af37]" />
-              </a>
+              </span>
             </div>
-
-            {/* Center Content Overlaid on Banner: Centered Logo & Workshop Identity */}
-            <div className="relative z-10 max-w-2xl mx-auto space-y-4 px-4">
-              {/* Standalone Brand Shield Logo centered */}
-              <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full p-1 bg-black/80 backdrop-blur-md border-2 border-[#d4af37] shadow-2xl overflow-hidden flex items-center justify-center">
-                <img
-                  src="/images/ak_sports_logo.jpg"
-                  alt="AK Sports Gold Shield Crest"
-                  className="w-full h-full object-cover object-center scale-135"
-                />
-              </div>
-
-              {/* Title & Clickable Facebook Hyperlink */}
-              <div>
-                <a
-                  href={facebookUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-[0.25em] text-[#f3e08b] hover:text-white transition-colors underline underline-offset-4 decoration-[#d4af37]"
-                >
-                  <span>Official Workshop Identity</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-                <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mt-1">
-                  AK Sports · Sialkot Master Craftsmen
-                </h2>
-              </div>
-            </div>
-
-            {/* Bottom Accent */}
-            <div className="relative z-10 text-xs text-zinc-300 font-medium">
-              Handcrafted in Sialkot, Pakistan · Direct Factory-to-Doorstep
-            </div>
-          </div>
+          </a>
 
           {/* Editorial Story Text & Buttons Below Banner (Clean, Center-Aligned) */}
           <div className="p-8 sm:p-12 max-w-4xl mx-auto space-y-6">

@@ -29,15 +29,15 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
               className="flex items-center gap-3 text-left cursor-pointer group"
             >
               <div 
-                className="w-10 h-10 rounded-full flex items-center justify-center border shadow-xs overflow-hidden bg-black"
+                className="w-10 h-10 rounded-full flex items-center justify-center border shadow-xs overflow-hidden bg-black p-0.5"
                 style={{
                   borderColor: 'rgba(184, 148, 40, 0.4)',
                 }}
               >
                 <img 
-                  src="/images/ak_sports_logo.jpg" 
+                  src="/images/ak_sports_logo_centered.png" 
                   alt="AK Sports Official Logo" 
-                  className="w-full h-full object-cover object-center scale-140"
+                  className="w-full h-full object-contain object-center"
                 />
               </div>
               <div>

@@ -211,11 +211,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
           
           {/* Brand Logo & Admin Badge */}
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-black border border-[#d4af37] overflow-hidden flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-black border border-[#d4af37] overflow-hidden flex items-center justify-center shrink-0 p-0.5">
               <img
-                src="/images/ak_sports_logo.jpg"
+                src="/images/ak_sports_logo_centered.png"
                 alt="AK Sports Crest"
-                className="w-full h-full object-cover object-center scale-135"
+                className="w-full h-full object-contain object-center"
               />
             </div>
 

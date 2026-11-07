@@ -83,17 +83,17 @@ export const Header: React.FC<HeaderProps> = ({
           className="flex items-center gap-3 shrink-0 group py-1 text-left cursor-pointer"
           style={{ color: theme.textPrimary }}
         >
-          {/* Official AK Sports Logo Image */}
+          {/* Official AK Sports Logo Image (Centered Emblem) */}
           <div 
-            className="w-11 h-11 rounded-full flex items-center justify-center relative overflow-hidden border-2 shadow-sm transition-transform duration-300 group-hover:scale-105 bg-black shrink-0"
+            className="w-11 h-11 rounded-full flex items-center justify-center relative overflow-hidden border-2 shadow-sm transition-transform duration-300 group-hover:scale-105 bg-black shrink-0 p-0.5"
             style={{
               borderColor: '#d4af37',
             }}
           >
             <img 
-              src="/images/ak_sports_logo.jpg" 
+              src="/images/ak_sports_logo_centered.png" 
               alt="AK Sports Official Logo" 
-              className="w-full h-full object-cover object-center scale-135"
+              className="w-full h-full object-contain object-center"
             />
           </div>
 
