@@ -293,6 +293,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
             }}
             onToggleActive={handleToggleActive}
             onDeleteRequest={handleDeleteProductRequest}
+            onReload={loadProducts}
           />
         ) : (
           <ProductForm

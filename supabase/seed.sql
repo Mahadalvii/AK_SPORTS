@@ -278,3 +278,16 @@ VALUES
     -- AK Bat Grips (60 Total)
     ('ak-accessories-grip-pack', 'Pack of 3 Assorted', 60)
 ON CONFLICT (product_id, size_or_variant) DO NOTHING;
+
+-- 4. SEED PRODUCT GALLERY IMAGES
+INSERT INTO public.product_images (product_id, url, sort_order)
+VALUES
+    ('ak-apparel-pro-trousers', '/images/products/clothing_athletic_trousers_1794058288601.jpg', 0),
+    ('ak-apparel-oversized-tee', '/images/products/clothing_oversized_tee_1794058288633.jpg', 0),
+    ('ak-apparel-stealth-kit', '/images/products/sports_apparel_jersey_1794057615270.jpg', 0),
+    ('ak-bat-gold-edition', '/images/products/cricket_bat_gold_pro_1794057613027.jpg', 0),
+    ('ak-bat-carbon-shadow', '/images/products/cricket_bat_gold_pro_1794057613027.jpg', 0),
+    ('ak-tape-balls-pro', '/images/products/cricket_tape_balls_1794057613585.jpg', 0),
+    ('ak-gloves-pro-gold', '/images/products/cricket_gloves_luxury_1794057613785.jpg', 0),
+    ('ak-accessories-grip-pack', '/images/products/sports_apparel_jersey_1794057615270.jpg', 0)
+ON CONFLICT DO NOTHING;

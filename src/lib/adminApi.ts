@@ -676,3 +676,72 @@ export async function uploadProductVideoToStorage(
     return { success: false, error: err.message || 'Video upload failed' };
   }
 }
+
+/**
+ * Seeds the 8 default showcase products into Supabase so the admin can edit them directly
+ */
+export async function seedDefaultCatalog(): Promise<{
+  success: boolean;
+  count: number;
+  error?: string;
+}> {
+  try {
+    let seeded = 0;
+
+    for (const prod of PRODUCTS) {
+      const adminProduct: AdminProduct = {
+        id: prod.id,
+        name: prod.name,
+        category: prod.category,
+        category_label: prod.categoryLabel,
+        price: prod.price,
+        original_price: prod.originalPrice || null,
+        rating: prod.rating,
+        reviews_count: prod.reviewsCount,
+        image_url: prod.image,
+        tag: prod.tag || null,
+        description: prod.description,
+        specs: prod.specs || [],
+        features: prod.features || [],
+        weight: prod.weight || null,
+        video_url: null,
+        is_featured: prod.isFeatured || false,
+        is_active: true,
+        variants: (prod.sizes && prod.sizes.length > 0)
+          ? prod.sizes.map((s, idx) => ({
+              id: `var-${prod.id}-${idx}`,
+              size_or_variant: s,
+              stock: prod.stock ? Math.max(5, Math.round(prod.stock / prod.sizes!.length)) : 15,
+            }))
+          : [
+              {
+                id: `var-${prod.id}-0`,
+                size_or_variant: 'Standard',
+                stock: prod.stock || 20,
+              },
+            ],
+        images: [
+          {
+            url: prod.image,
+            sort_order: 0,
+          },
+        ],
+      };
+
+      const res = await saveAdminProduct(adminProduct);
+      if (res.success) {
+        seeded++;
+      } else {
+        console.warn(`[AK Sports Admin] Error seeding ${prod.id}:`, res.error);
+      }
+    }
+
+    return { success: seeded > 0, count: seeded };
+  } catch (err: any) {
+    return {
+      success: false,
+      count: 0,
+      error: err.message || 'Failed seeding default catalog',
+    };
+  }
+}

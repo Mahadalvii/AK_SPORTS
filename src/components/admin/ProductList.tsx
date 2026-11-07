@@ -12,9 +12,11 @@ import {
   Package, 
   Sparkles,
   ExternalLink,
-  Video
+  Video,
+  Loader2,
+  Database
 } from 'lucide-react';
-import { AdminProduct } from '../../lib/adminApi';
+import { AdminProduct, seedDefaultCatalog } from '../../lib/adminApi';
 
 interface ProductListProps {
   products: AdminProduct[];
@@ -22,6 +24,7 @@ interface ProductListProps {
   onEdit: (product: AdminProduct) => void;
   onToggleActive: (productId: string, currentActive: boolean) => void;
   onDeleteRequest: (product: AdminProduct) => void;
+  onReload: () => void;
 }
 
 export const ProductList: React.FC<ProductListProps> = ({
@@ -30,10 +33,30 @@ export const ProductList: React.FC<ProductListProps> = ({
   onEdit,
   onToggleActive,
   onDeleteRequest,
+  onReload,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'hidden'>('all');
+  const [isSeeding, setIsSeeding] = useState(false);
+  const [seedError, setSeedError] = useState<string | null>(null);
+
+  const handleSeedCatalog = async () => {
+    setIsSeeding(true);
+    setSeedError(null);
+    try {
+      const res = await seedDefaultCatalog();
+      if (res.success) {
+        onReload();
+      } else {
+        setSeedError(res.error || 'Failed to seed catalog');
+      }
+    } catch (err: any) {
+      setSeedError(err.message || 'Error seeding catalog');
+    } finally {
+      setIsSeeding(false);
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
@@ -79,13 +102,35 @@ export const ProductList: React.FC<ProductListProps> = ({
           </div>
         </div>
 
-        <button
-          onClick={onAddNew}
-          className="px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#d4af37] hover:bg-[#c29e2f] text-black transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer active:scale-95 shrink-0"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Product</span>
-        </button>
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={handleSeedCatalog}
+            disabled={isSeeding}
+            className="px-3.5 py-2.5 rounded-xl text-xs font-semibold border border-zinc-700 hover:border-[#d4af37] bg-zinc-900 text-zinc-300 hover:text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+            title="Import or reset 8 initial showcase products into Supabase"
+          >
+            {isSeeding ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                <span>Importing...</span>
+              </>
+            ) : (
+              <>
+                <Database className="w-3.5 h-3.5 text-[#d4af37]" />
+                <span className="hidden sm:inline">Import Default Catalog</span>
+                <span className="sm:hidden">Import Catalog</span>
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={onAddNew}
+            className="px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#d4af37] hover:bg-[#c29e2f] text-black transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer active:scale-95 shrink-0"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add New Product</span>
+          </button>
+        </div>
       </div>
 
       {/* Filter and Search Bar */}
@@ -131,6 +176,47 @@ export const ProductList: React.FC<ProductListProps> = ({
           </select>
         </div>
       </div>
+
+      {/* Zero Products Callout Banner */}
+      {products.length === 0 && (
+        <div className="text-center py-12 px-6 bg-[#18181b] rounded-2xl border border-zinc-800 space-y-4 shadow-xl">
+          <div className="w-12 h-12 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/30 flex items-center justify-center mx-auto text-[#d4af37]">
+            <Sparkles className="w-6 h-6" />
+          </div>
+          <div className="space-y-1">
+            <h3 className="font-display font-bold text-base text-white">
+              No Products in Database Yet
+            </h3>
+            <p className="text-xs text-zinc-400 max-w-lg mx-auto leading-relaxed">
+              Import the 8 default showcase items (athletic trousers, heavy-cotton training tee, match kit, Sialkot willow bats, tournament balls, and batting gloves) with 1 click so you can edit pricing, stock, specs, and photos directly in the portal.
+            </p>
+          </div>
+          {seedError && (
+            <div className="text-xs text-rose-400 bg-rose-950/60 p-2.5 rounded-xl border border-rose-800 max-w-md mx-auto">
+              {seedError}
+            </div>
+          )}
+          <div className="pt-2">
+            <button
+              onClick={handleSeedCatalog}
+              disabled={isSeeding}
+              className="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#d4af37] hover:bg-[#c29e2f] text-black transition-all inline-flex items-center gap-2 shadow-lg cursor-pointer active:scale-95 disabled:opacity-50"
+            >
+              {isSeeding ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Importing Showcase Products...</span>
+                </>
+              ) : (
+                <>
+                  <Database className="w-4 h-4" />
+                  <span>Import 8 Showcase Products Into Portal</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Products Table */}
       <div className="bg-[#18181b] rounded-2xl border border-zinc-800 overflow-hidden shadow-xl">
