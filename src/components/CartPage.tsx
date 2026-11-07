@@ -160,7 +160,7 @@ export const CartPage: React.FC<CartPageProps> = ({
   };
 
   const generateWhatsAppOrderUrl = () => {
-    if (!orderPlaced) return 'https://wa.me/?text=Hi%20AK%20Sports%2C%20I%20have%20an%20order%20question';
+    if (!orderPlaced) return 'https://wa.me/923082073415?text=Hi%20AK%20Sports%2C%20I%20have%20an%20order%20question';
     const message = `Salam AK Sports! I have placed Order #${orderPlaced.orderId} for Cash On Delivery:
 
 *Order ID:* ${orderPlaced.orderId}
@@ -174,7 +174,7 @@ export const CartPage: React.FC<CartPageProps> = ({
 ${orderPlaced.items.map(it => `• ${it.name} (x${it.quantity})${it.size ? ` [${it.size}]` : ''}`).join('\n')}
 
 Please confirm dispatch from Sialkot workshop. JazakAllah!`;
-    return `https://wa.me/?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/923082073415?text=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -196,7 +196,7 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
           </div>
 
           <a
-            href="https://wa.me/?text=Hi%20AK%20Sports%2C%20I%20need%20help%20with%20my%20order"
+            href="https://wa.me/923082073415?text=Hi%20AK%20Sports%2C%20I%20need%20help%20with%20my%20order"
             target="_blank"
             rel="noreferrer"
             className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"

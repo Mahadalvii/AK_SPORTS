@@ -142,7 +142,7 @@ City: ${orderPlaced.city}
 Total (COD): Rs. ${orderPlaced.total.toLocaleString()}
 
 Please confirm dispatch from Sialkot workshop. JazakAllah!`;
-      return `https://wa.me/?text=${encodeURIComponent(confirmedMsg)}`;
+      return `https://wa.me/923082073415?text=${encodeURIComponent(confirmedMsg)}`;
     }
 
     const itemsList = items
@@ -169,7 +169,7 @@ Address: ${customerAddress || 'Pending'}
 
 Please confirm delivery time and dispatch.`;
 
-    return `https://wa.me/?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/923082073415?text=${encodeURIComponent(message)}`;
   };
 
   return (

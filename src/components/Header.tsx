@@ -62,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
             <span>·</span>
             <a
-              href="https://wa.me/?text=Hi%20AK%20Sports%2C%20I%20have%20an%20inquiry%20regarding%20orders"
+              href="https://wa.me/923082073415?text=Hi%20AK%20Sports%2C%20I%20have%20an%20inquiry%20regarding%20orders"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-1 text-emerald-700 hover:text-emerald-800 transition-colors font-semibold"

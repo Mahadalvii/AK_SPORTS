@@ -56,7 +56,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <a
-                href="https://wa.me/?text=Hi%20AK%20Sports%20Team"
+                href="https://wa.me/923082073415?text=Hi%20AK%20Sports%20Team"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"

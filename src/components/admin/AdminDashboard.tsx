@@ -337,7 +337,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
 
             {/* Orders Tab */}
             <button
-              onClick={() => setActiveNavTab('orders')}
+              onClick={() => {
+                setActiveNavTab('orders');
+                loadOrders();
+              }}
               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
                 activeNavTab === 'orders'
                   ? 'bg-[#d4af37] text-zinc-950 shadow-md'

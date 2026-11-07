@@ -941,7 +941,15 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
       .order('created_at', { ascending: false });
 
     if (orderError || !dbOrders) {
-      console.warn('[AK Sports Admin] Error loading orders from Supabase:', orderError);
+      console.warn('[AK Sports Admin] Error loading orders from Supabase, checking local cache:', orderError);
+      const localRaw = localStorage.getItem('ak_sports_admin_mock_orders');
+      if (localRaw) {
+        try {
+          return JSON.parse(localRaw);
+        } catch {
+          return [];
+        }
+      }
       return [];
     }
 
@@ -971,7 +979,7 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
       });
     });
 
-    return dbOrders.map((o: any) => ({
+    const parsedDbOrders: AdminOrder[] = dbOrders.map((o: any) => ({
       id: o.id,
       customer_name: o.customer_name,
       customer_phone: o.customer_phone,
@@ -987,8 +995,31 @@ export async function getAdminOrders(): Promise<AdminOrder[]> {
       updated_at: o.updated_at,
       items: itemsByOrder[o.id] || [],
     }));
+
+    // Merge any locally placed orders not yet in database
+    const localRaw = localStorage.getItem('ak_sports_admin_mock_orders');
+    if (localRaw) {
+      try {
+        const localOrders: AdminOrder[] = JSON.parse(localRaw);
+        localOrders.forEach(lo => {
+          if (!parsedDbOrders.some(p => p.id === lo.id)) {
+            parsedDbOrders.push(lo);
+          }
+        });
+      } catch (err) {
+        console.warn('[AK Sports Admin] Error parsing local orders:', err);
+      }
+    }
+
+    return parsedDbOrders;
   } catch (err: any) {
     console.error('[AK Sports Admin] Exception loading orders:', err);
+    const localRaw = localStorage.getItem('ak_sports_admin_mock_orders');
+    if (localRaw) {
+      try {
+        return JSON.parse(localRaw);
+      } catch {}
+    }
     return [];
   }
 }

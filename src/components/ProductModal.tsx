@@ -30,7 +30,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
     setTimeout(() => setAddedNotice(false), 2200);
   };
 
-  const whatsAppUrl = `https://wa.me/?text=${encodeURIComponent(
+  const whatsAppUrl = `https://wa.me/923082073415?text=${encodeURIComponent(
     `Hello AK Sports! I am interested in purchasing:
 - Product: ${product.name}
 - Price: Rs. ${product.price.toLocaleString()}

@@ -229,7 +229,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
             </div>
           </div>
           <a
-            href="https://wa.me/?text=Hi%20AK%20Sports%2C%20I%20have%20questions%20about%20your%20products"
+            href="https://wa.me/923082073415?text=Hi%20AK%20Sports%2C%20I%20have%20questions%20about%20your%20products"
             target="_blank"
             rel="noreferrer"
             className="px-4 py-2 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors cursor-pointer shrink-0"
