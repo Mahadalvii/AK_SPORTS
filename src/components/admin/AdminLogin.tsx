@@ -49,7 +49,11 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess, onExitToStore
       });
 
       if (authError || !authData.user) {
-        setErrorMessage(authError?.message || 'Invalid administrator login credentials.');
+        let msg = authError?.message || 'Invalid administrator login credentials.';
+        if (msg.toLowerCase().includes('invalid path')) {
+          msg = 'Invalid Supabase Project URL: Please ensure VITE_SUPABASE_URL in Vercel is set to "https://<project-id>.supabase.co" without any "/rest/v1" or trailing slash.';
+        }
+        setErrorMessage(msg);
         setIsLoading(false);
         return;
       }

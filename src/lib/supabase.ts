@@ -1,7 +1,29 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+/**
+ * Sanitizes Supabase URL to strip accidental trailing slashes, quotes, or /rest/v1 paths
+ */
+function sanitizeSupabaseUrl(url?: string): string | undefined {
+  if (!url) return undefined;
+  let cleaned = url.trim().replace(/^["']|["']$/g, '');
+  cleaned = cleaned.replace(/\/+$/, '');
+  if (cleaned.endsWith('/rest/v1')) {
+    cleaned = cleaned.slice(0, -'/rest/v1'.length);
+  } else if (cleaned.endsWith('/rest')) {
+    cleaned = cleaned.slice(0, -'/rest'.length);
+  } else if (cleaned.endsWith('/auth/v1')) {
+    cleaned = cleaned.slice(0, -'/auth/v1'.length);
+  }
+  return cleaned.replace(/\/+$/, '');
+}
+
+function sanitizeKey(key?: string): string | undefined {
+  if (!key) return undefined;
+  return key.trim().replace(/^["']|["']$/g, '');
+}
+
+const supabaseUrl = sanitizeSupabaseUrl(import.meta.env.VITE_SUPABASE_URL as string | undefined);
+const supabaseAnonKey = sanitizeKey(import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined);
 
 export const isSupabaseConfigured = (): boolean => {
   return Boolean(
