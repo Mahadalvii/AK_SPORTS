@@ -12,11 +12,12 @@ import {
   Shield, 
   Package, 
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Flame
 } from 'lucide-react';
 import { ThemeConfig } from '../types';
 
-export type PageId = 'home' | 'apparel' | 'bats' | 'gloves' | 'accessories' | 'cart' | 'admin';
+export type PageId = 'home' | 'apparel' | 'bats' | 'hardball' | 'gloves' | 'accessories' | 'cart' | 'admin';
 
 interface HeaderProps {
   currentPage: PageId;
@@ -39,8 +40,9 @@ export const Header: React.FC<HeaderProps> = ({
 
   const navLinks: { id: PageId; label: string; icon: React.ReactNode }[] = [
     { id: 'home', label: 'Home', icon: <Home className="w-4 h-4" /> },
-    { id: 'apparel', label: 'Athletic Wear', icon: <Shirt className="w-4 h-4" /> },
-    { id: 'bats', label: 'Tape Ball Cricket', icon: <Trophy className="w-4 h-4" /> },
+    { id: 'apparel', label: 'Apparel', icon: <Shirt className="w-4 h-4" /> },
+    { id: 'bats', label: 'Tape Ball', icon: <Trophy className="w-4 h-4" /> },
+    { id: 'hardball', label: 'Hard Ball', icon: <Flame className="w-4 h-4" /> },
     { id: 'gloves', label: 'Gloves & Kit', icon: <Shield className="w-4 h-4" /> },
     { id: 'accessories', label: 'Accessories', icon: <Package className="w-4 h-4" /> },
   ];
@@ -135,21 +137,21 @@ export const Header: React.FC<HeaderProps> = ({
                 AK SPORTS
               </span>
               <span className="text-[8px] sm:text-[10px] tracking-[0.16em] uppercase font-semibold mt-0.5" style={{ color: theme.accent }}>
-                ATHLETIC WEAR &amp; CRICKET
+                APPAREL &amp; CRICKET
               </span>
             </div>
           </button>
         </div>
 
         {/* Center: Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-6 xl:gap-7 text-xs lg:text-sm font-medium">
           {navLinks.map((link) => {
             const isActive = currentPage === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => onNavigate(link.id)}
-                className="whitespace-nowrap shrink-0 transition-colors py-2 relative text-sm cursor-pointer"
+                className="whitespace-nowrap shrink-0 transition-colors py-2 relative cursor-pointer"
                 style={{
                   color: isActive ? theme.textPrimary : theme.textMuted,
                   fontWeight: isActive ? 700 : 500,

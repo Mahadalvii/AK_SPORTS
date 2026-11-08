@@ -31,10 +31,11 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
     ],
   },
   apparel: {
-    title: 'Athletic Wear Collection — 4-Way Stretch Trousers & Heavy Tees | AK Sports',
+    title: 'Apparel Collection — 4-Way Stretch Trousers & Heavy Tees | AK Sports',
     description: 'Explore AK Sports performance apparel: everyday 4-way stretch athletic flex joggers, 280 GSM combed compact cotton tees, and dry-fit training sets built for gym agility and street style.',
     canonicalPath: '/apparel',
     keywords: [
+      'apparel',
       'athletic wear',
       'gym trousers Pakistan',
       '4-way flex joggers',
@@ -46,14 +47,15 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
     ogType: 'website',
     breadcrumbs: [
       { name: 'Home', path: '/' },
-      { name: 'Athletic Wear', path: '/apparel' }
+      { name: 'Apparel', path: '/apparel' }
     ],
   },
   bats: {
-    title: 'Tape Ball Cricket Division — Handcrafted Willow Bats | AK Sports',
+    title: 'Tape Ball Division — Handcrafted Willow Bats | AK Sports',
     description: 'Handcrafted English willow tape ball cricket bats with 48mm–50mm massive edge profiles, feather-light pickup balance, and aerodynamic tournament balls. Cash on Delivery across Pakistan.',
     canonicalPath: '/bats',
     keywords: [
+      'tape ball',
       'tape ball bats',
       'AK Gold Edition bat',
       'handcrafted cricket bats',
@@ -65,7 +67,26 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
     ogType: 'website',
     breadcrumbs: [
       { name: 'Home', path: '/' },
-      { name: 'Tape Ball Cricket', path: '/bats' }
+      { name: 'Tape Ball', path: '/bats' }
+    ],
+  },
+  hardball: {
+    title: 'Hard Ball Division — Handcrafted Willow Bats & Leather Match Balls | AK Sports',
+    description: 'Handcrafted premium English willow hard ball cricket bats, match-ready 4-piece leather balls, and tournament equipment. Cash on Delivery nationwide in Pakistan.',
+    canonicalPath: '/hardball',
+    keywords: [
+      'hard ball',
+      'hard ball cricket bats',
+      'English willow hard ball bat',
+      'leather match balls Pakistan',
+      'AK hard ball cricket',
+      'Grade 1 English willow',
+      'tournament cricket bat'
+    ],
+    ogType: 'website',
+    breadcrumbs: [
+      { name: 'Home', path: '/' },
+      { name: 'Hard Ball', path: '/hardball' }
     ],
   },
   gloves: {

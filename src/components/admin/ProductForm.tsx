@@ -46,8 +46,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   // Form State
   const [id, setId] = useState(initialProduct?.id || '');
   const [name, setName] = useState(initialProduct?.name || '');
-  const [category, setCategory] = useState<'apparel' | 'bats' | 'balls' | 'gloves' | 'kits'>(
-    initialProduct?.category || 'apparel'
+  const [category, setCategory] = useState<'apparel' | 'bats' | 'balls' | 'gloves' | 'kits' | 'hardball'>(
+    (initialProduct?.category as any) || 'apparel'
   );
   const [categoryLabel, setCategoryLabel] = useState(
     initialProduct?.category_label || 'Athletic Wear Collection'
@@ -485,8 +485,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   onChange={(e) => setCategory(e.target.value as any)}
                   className="w-full px-3 py-2 rounded-xl border border-zinc-700 bg-zinc-900 text-white text-xs focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
                 >
-                  <option value="apparel">apparel (Athletic Wear)</option>
-                  <option value="bats">bats (Tape Ball Bats)</option>
+                  <option value="apparel">apparel (Apparel)</option>
+                  <option value="bats">bats (Tape Ball)</option>
+                  <option value="hardball">hardball (Hard Ball)</option>
                   <option value="balls">balls (Tournament Balls)</option>
                   <option value="gloves">gloves (Batting Gloves &amp; Armor)</option>
                   <option value="kits">kits (Accessories)</option>

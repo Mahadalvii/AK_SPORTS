@@ -303,7 +303,7 @@ Please confirm dispatch from Bahawalnagar outlet. JazakAllah!`;
                 Your Shopping Cart is Empty
               </h2>
               <p className="text-xs sm:text-sm text-zinc-600 max-w-md mx-auto">
-                Explore our everyday athletic wear, heavyweight tees, and tournament-grade tape ball cricket gear.
+                Explore our everyday apparel, heavyweight tees, and championship tape ball &amp; hard ball gear.
               </p>
             </div>
 
@@ -313,14 +313,21 @@ Please confirm dispatch from Bahawalnagar outlet. JazakAllah!`;
                 className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer"
                 style={{ backgroundColor: theme.accent, color: theme.accentText }}
               >
-                Browse Athletic Wear
+                Apparel
               </button>
               <button
                 onClick={() => onNavigate('bats')}
                 className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-semibold border hover:bg-black/5 transition-colors cursor-pointer"
                 style={{ borderColor: theme.border, color: theme.textPrimary }}
               >
-                Tape Ball Cricket
+                Tape Ball
+              </button>
+              <button
+                onClick={() => onNavigate('hardball')}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-semibold border hover:bg-black/5 transition-colors cursor-pointer"
+                style={{ borderColor: theme.border, color: theme.textPrimary }}
+              >
+                Hard Ball
               </button>
             </div>
           </div>

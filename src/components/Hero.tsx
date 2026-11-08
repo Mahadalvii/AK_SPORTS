@@ -34,7 +34,7 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Minimalist Kicker */}
             <div className="inline-flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-semibold tracking-wider uppercase" style={{ color: theme.accent }}>
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Contemporary Athletic Wear · Tape Ball Cricket</span>
+              <span>Contemporary Apparel · Tape Ball &amp; Hard Ball Cricket</span>
             </div>
 
             {/* Headline with responsive sizing */}
@@ -68,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({
                   color: theme.accentText,
                 }}
               >
-                <span>Explore apparel</span>
+                <span>Apparel</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -82,6 +82,18 @@ export const Hero: React.FC<HeroProps> = ({
                 }}
               >
                 Tape Ball
+              </button>
+
+              <button
+                onClick={() => onNavigate('hardball')}
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider border transition-all duration-200 cursor-pointer hover:bg-black/5 text-center"
+                style={{
+                  borderColor: theme.border,
+                  color: theme.textPrimary,
+                  backgroundColor: theme.cardBg,
+                }}
+              >
+                Hard Ball
               </button>
             </div>
 

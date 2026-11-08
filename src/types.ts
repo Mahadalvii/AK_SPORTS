@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  category: 'apparel' | 'bats' | 'gloves' | 'balls' | 'kits';
+  category: 'apparel' | 'bats' | 'gloves' | 'balls' | 'kits' | 'hardball';
   categoryLabel: string;
   price: number;
   originalPrice?: number;

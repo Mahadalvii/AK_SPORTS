@@ -155,8 +155,9 @@ export const ProductList: React.FC<ProductListProps> = ({
             className="w-full px-3 py-2 rounded-xl border border-zinc-800 bg-[#1a1a1d] text-white text-xs focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
           >
             <option value="all">All Categories</option>
-            <option value="apparel">Athletic Wear (apparel)</option>
-            <option value="bats">Tape Ball Bats (bats)</option>
+            <option value="apparel">Apparel (apparel)</option>
+            <option value="bats">Tape Ball (bats)</option>
+            <option value="hardball">Hard Ball (hardball)</option>
             <option value="balls">Tournament Balls (balls)</option>
             <option value="gloves">Gloves &amp; Armor (gloves)</option>
             <option value="kits">Accessories (kits)</option>

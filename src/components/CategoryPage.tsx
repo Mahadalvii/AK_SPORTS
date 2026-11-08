@@ -28,7 +28,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
     switch (pageId) {
       case 'apparel':
         return {
-          title: 'Athletic Wear Collection',
+          title: 'Apparel Collection',
           subtitle: 'Engineered everyday performance trousers, combed heavy-cotton tees, and training sets.',
           category: 'apparel',
           badge: 'Daily Training & Gym Life',
@@ -36,11 +36,19 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
         };
       case 'bats':
         return {
-          title: 'Tape Ball Cricket Division',
+          title: 'Tape Ball Division',
           subtitle: 'Handcrafted English willow bats with 48mm+ massive edges and tournament balls.',
           category: 'bats',
-          badge: 'Handcrafted Player Division',
+          badge: 'Handcrafted Tape Ball Division',
           description: 'Custom blade profiles carved for maximum pickup balance, explosive sweet spots, and high rebound ping against tournament tape balls.',
+        };
+      case 'hardball':
+        return {
+          title: 'Hard Ball Division',
+          subtitle: 'Professional Grade 1 & 2 English willow bats, club match leather balls, and match gear.',
+          category: 'hardball',
+          badge: 'Championship Hard Ball Division',
+          description: 'Mastercrafted English willow blades pressed for immense stroke punch, thick edges, and exquisite pickup against genuine leather seam pace.',
         };
       case 'gloves':
         return {
@@ -73,7 +81,9 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
     return products.filter((p) => {
       const matchesCategory = pageId === 'bats' 
         ? (p.category === 'bats' || p.category === 'balls')
-        : p.category === meta.category;
+        : pageId === 'hardball'
+          ? (p.category === 'hardball')
+          : p.category === meta.category;
 
       const matchesSearch =
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

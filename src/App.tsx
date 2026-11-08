@@ -37,6 +37,7 @@ export default function App() {
       if (path === '/cart') return 'cart';
       if (path === '/apparel') return 'apparel';
       if (path === '/bats') return 'bats';
+      if (path === '/hardball') return 'hardball';
       if (path === '/gloves') return 'gloves';
       if (path === '/accessories') return 'accessories';
     }
@@ -207,7 +208,7 @@ export default function App() {
                   className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors hover:bg-black/5 cursor-pointer text-zinc-800"
                   style={{ borderColor: activeTheme.border }}
                 >
-                  Athletic Wear &rarr;
+                  Apparel &rarr;
                 </button>
                 <button
                   onClick={() => handleNavigate('bats')}
@@ -215,6 +216,13 @@ export default function App() {
                   style={{ borderColor: activeTheme.border }}
                 >
                   Tape Ball &rarr;
+                </button>
+                <button
+                  onClick={() => handleNavigate('hardball')}
+                  className="px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors hover:bg-black/5 cursor-pointer text-zinc-800"
+                  style={{ borderColor: activeTheme.border }}
+                >
+                  Hard Ball &rarr;
                 </button>
               </div>
             </div>
@@ -234,9 +242,9 @@ export default function App() {
 
             {/* Separate Category Hub Cards: Direct Portals to Individual Pages */}
             <div className="pt-4 sm:pt-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
                 
-                {/* Hub 1: Athletic Wear */}
+                {/* Hub 1: Apparel */}
                 <div 
                   onClick={() => handleNavigate('apparel')}
                   className="p-4 sm:p-6 rounded-2xl border shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer group flex flex-col justify-between"
@@ -247,19 +255,19 @@ export default function App() {
                       Core Apparel Line
                     </span>
                     <h3 className="font-display font-bold text-lg sm:text-xl group-hover:underline text-zinc-900 leading-snug">
-                      Athletic Wear Collection
+                      Apparel Collection
                     </h3>
                     <p className="text-xs text-zinc-600 leading-relaxed">
                       4-way stretch flex joggers, combed heavy-cotton tees, training shorts, and active gym wear.
                     </p>
                   </div>
                   <div className="pt-3 mt-3 border-t flex items-center justify-between text-xs font-bold text-[#b89428]" style={{ borderColor: activeTheme.border }}>
-                    <span>Browse Collection Page</span>
+                    <span>Browse Apparel</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
 
-                {/* Hub 2: Tape Ball Cricket */}
+                {/* Hub 2: Tape Ball */}
                 <div 
                   onClick={() => handleNavigate('bats')}
                   className="p-4 sm:p-6 rounded-2xl border shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer group flex flex-col justify-between"
@@ -270,19 +278,42 @@ export default function App() {
                       Tournament Division
                     </span>
                     <h3 className="font-display font-bold text-lg sm:text-xl group-hover:underline text-zinc-900 leading-snug">
-                      Tape Ball Cricket
+                      Tape Ball
                     </h3>
                     <p className="text-xs text-zinc-600 leading-relaxed">
-                      Handcrafted Sialkot English willow bats with 48mm–50mm massive edge profiles and calibrated seam balls.
+                      Handcrafted English willow bats with 48mm–50mm massive edge profiles and calibrated tournament seam balls.
                     </p>
                   </div>
                   <div className="pt-3 mt-3 border-t flex items-center justify-between text-xs font-bold text-[#b89428]" style={{ borderColor: activeTheme.border }}>
-                    <span>Browse Cricket Division</span>
+                    <span>Browse Tape Ball</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
 
-                {/* Hub 3: Gloves & Kit */}
+                {/* Hub 3: Hard Ball */}
+                <div 
+                  onClick={() => handleNavigate('hardball')}
+                  className="p-4 sm:p-6 rounded-2xl border shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer group flex flex-col justify-between"
+                  style={{ backgroundColor: activeTheme.cardBg, borderColor: activeTheme.border }}
+                >
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-[#b89428]">
+                      Match Division
+                    </span>
+                    <h3 className="font-display font-bold text-lg sm:text-xl group-hover:underline text-zinc-900 leading-snug">
+                      Hard Ball
+                    </h3>
+                    <p className="text-xs text-zinc-600 leading-relaxed">
+                      Grade 1 &amp; 2 English willow blades pressed for immense punch, match-grade 4-piece leather balls, and armor.
+                    </p>
+                  </div>
+                  <div className="pt-3 mt-3 border-t flex items-center justify-between text-xs font-bold text-[#b89428]" style={{ borderColor: activeTheme.border }}>
+                    <span>Browse Hard Ball</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
+
+                {/* Hub 4: Gloves & Kit */}
                 <div 
                   onClick={() => handleNavigate('gloves')}
                   className="p-4 sm:p-6 rounded-2xl border shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer group flex flex-col justify-between"
@@ -438,7 +469,17 @@ export default function App() {
           }`}
         >
           <Trophy className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Cricket</span>
+          <span className="text-[10px] mt-0.5">Tape Ball</span>
+        </button>
+
+        <button
+          onClick={() => handleNavigate('hardball')}
+          className={`flex flex-col items-center justify-center p-1.5 rounded-lg transition-colors cursor-pointer ${
+            currentPage === 'hardball' ? 'text-[#b89428] font-bold' : 'text-zinc-600 hover:text-black'
+          }`}
+        >
+          <Flame className="w-5 h-5" />
+          <span className="text-[10px] mt-0.5">Hard Ball</span>
         </button>
 
         <button

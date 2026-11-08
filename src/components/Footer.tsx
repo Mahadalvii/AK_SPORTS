@@ -45,7 +45,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
                   AK SPORTS
                 </span>
                 <span className="text-[10px] tracking-widest uppercase font-semibold text-[#b89428]">
-                  ATHLETIC WEAR &amp; CRICKET
+                  APPAREL &amp; CRICKET
                 </span>
               </div>
             </button>
@@ -78,10 +78,10 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
             </div>
           </div>
 
-          {/* Quick Links: Athletic Wear */}
+          {/* Quick Links: Apparel */}
           <div className="space-y-3">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider" style={{ color: theme.accent }}>
-              Athletic Wear
+              Apparel
             </h4>
             <ul className="space-y-2 text-xs" style={{ color: theme.textMuted }}>
               <li>
@@ -107,30 +107,30 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
             </ul>
           </div>
 
-          {/* Quick Links: Tape Ball Cricket */}
+          {/* Quick Links: Cricket */}
           <div className="space-y-3">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider" style={{ color: theme.accent }}>
-              Tape Ball Cricket
+              Cricket Gear
             </h4>
             <ul className="space-y-2 text-xs" style={{ color: theme.textMuted }}>
               <li>
-                <button onClick={() => onNavigate('bats')} className="hover:text-black transition-colors cursor-pointer text-left">
-                  Gold Edition 48mm Bats
+                <button onClick={() => onNavigate('bats')} className="hover:text-black transition-colors cursor-pointer text-left font-semibold text-zinc-900">
+                  Tape Ball Division
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('bats')} className="hover:text-black transition-colors cursor-pointer text-left">
-                  Carbon Shadow Limited Bats
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('bats')} className="hover:text-black transition-colors cursor-pointer text-left">
-                  Tournament Match Balls (6-Pack)
+                <button onClick={() => onNavigate('hardball')} className="hover:text-black transition-colors cursor-pointer text-left font-semibold text-zinc-900">
+                  Hard Ball Division
                 </button>
               </li>
               <li>
                 <button onClick={() => onNavigate('gloves')} className="hover:text-black transition-colors cursor-pointer text-left">
                   Royal Pro Batting Gloves
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('accessories')} className="hover:text-black transition-colors cursor-pointer text-left">
+                  Grips &amp; Protection Gear
                 </button>
               </li>
             </ul>
