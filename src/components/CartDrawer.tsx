@@ -412,7 +412,7 @@ Please confirm delivery time and dispatch.`;
                         required
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
-                        className="w-full px-3 py-2 text-xs rounded-lg border outline-none transition-colors"
+                        className="w-full px-3 py-2 text-base sm:text-xs rounded-lg border outline-none transition-colors"
                         style={{
                           backgroundColor: theme.bg,
                           borderColor: theme.border,
@@ -428,7 +428,7 @@ Please confirm delivery time and dispatch.`;
                         required
                         value={customerPhone}
                         onChange={(e) => setCustomerPhone(e.target.value)}
-                        className="w-full px-3 py-2 text-xs rounded-lg border outline-none transition-colors"
+                        className="w-full px-3 py-2 text-base sm:text-xs rounded-lg border outline-none transition-colors font-mono"
                         style={{
                           backgroundColor: theme.bg,
                           borderColor: theme.border,
@@ -444,7 +444,7 @@ Please confirm delivery time and dispatch.`;
                         required
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
-                        className="w-full px-3 py-2 text-xs rounded-lg border outline-none transition-colors"
+                        className="w-full px-3 py-2 text-base sm:text-xs rounded-lg border outline-none transition-colors"
                         style={{
                           backgroundColor: theme.bg,
                           borderColor: theme.border,
@@ -460,7 +460,7 @@ Please confirm delivery time and dispatch.`;
                         rows={2}
                         value={customerAddress}
                         onChange={(e) => setCustomerAddress(e.target.value)}
-                        className="w-full px-3 py-2 text-xs rounded-lg border outline-none transition-colors resize-none"
+                        className="w-full px-3 py-2 text-base sm:text-xs rounded-lg border outline-none transition-colors resize-none"
                         style={{
                           backgroundColor: theme.bg,
                           borderColor: theme.border,

@@ -140,7 +140,7 @@ export const OrderLookupModal: React.FC<OrderLookupModalProps> = ({
                 placeholder="e.g. AK-7F3K9Q"
                 value={orderId}
                 onChange={(e) => setOrderId(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs sm:text-sm font-mono uppercase rounded-xl border outline-none transition-colors"
+                className="w-full px-3.5 py-2.5 text-base sm:text-sm font-mono uppercase rounded-xl border outline-none transition-colors"
                 style={{
                   backgroundColor: theme.bg,
                   borderColor: theme.border,
@@ -156,7 +156,7 @@ export const OrderLookupModal: React.FC<OrderLookupModalProps> = ({
                 placeholder="03XX-XXXXXXX"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border outline-none transition-colors"
+                className="w-full px-3.5 py-2.5 text-base sm:text-sm rounded-xl border outline-none transition-colors"
                 style={{
                   backgroundColor: theme.bg,
                   borderColor: theme.border,

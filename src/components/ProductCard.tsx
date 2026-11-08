@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, ShoppingCart, Star, Sparkles } from 'lucide-react';
+import { Eye, ShoppingCart, Star } from 'lucide-react';
 import { Product, ThemeConfig } from '../types';
 
 interface ProductCardProps {
@@ -25,7 +25,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* Product Image Stage */}
       <div 
-        className="relative aspect-4/3 overflow-hidden cursor-pointer"
+        className="relative aspect-square sm:aspect-4/3 overflow-hidden cursor-pointer"
         onClick={() => onOpenProduct(product)}
         style={{ backgroundColor: theme.bg }}
       >
@@ -39,9 +39,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Subtle Minimalist Tag */}
         {product.tag && (
           <div 
-            className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase backdrop-blur-md shadow-sm"
+            className="absolute top-2 left-2 sm:top-2.5 sm:left-2.5 px-1.5 py-0.5 sm:px-2 rounded text-[9px] sm:text-[10px] font-bold tracking-wider uppercase backdrop-blur-md shadow-sm"
             style={{
-              backgroundColor: theme.mode === 'dark' ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.9)',
+              backgroundColor: theme.mode === 'dark' ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.92)',
               color: theme.accent,
               border: `1px solid ${theme.border}`,
             }}
@@ -50,8 +50,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
 
-        {/* Quick View Overlay Trigger */}
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2 p-4">
+        {/* Quick View Overlay Trigger (Desktop hover) */}
+        <div className="hidden sm:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 items-center justify-center gap-2 p-4">
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -66,15 +66,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Content & Metadata */}
-      <div className="p-4 flex flex-col flex-1 justify-between gap-3">
+      <div className="p-2.5 sm:p-4 flex flex-col flex-1 justify-between gap-2 sm:gap-3">
         <div>
-          {/* Unboxed Metadata Line with typographic dot separator */}
-          <div className="flex items-center justify-between text-[11px] mb-1.5" style={{ color: theme.textMuted }}>
-            <span className="uppercase font-semibold tracking-wider">{product.categoryLabel}</span>
+          {/* Metadata Line */}
+          <div className="flex items-center justify-between text-[10px] sm:text-[11px] mb-1 text-zinc-500">
+            <span className="uppercase font-semibold tracking-wider truncate mr-1">
+              {product.categoryLabel}
+            </span>
             {Boolean(product.reviewsCount && product.reviewsCount > 0) && (
-              <span className="flex items-center gap-1">
-                <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                <span className="tabular-nums font-medium">{product.rating}</span>
+              <span className="flex items-center gap-0.5 sm:gap-1 shrink-0">
+                <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-400" />
+                <span className="tabular-nums font-medium text-[10px] sm:text-[11px]">{product.rating}</span>
               </span>
             )}
           </div>
@@ -82,49 +84,50 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* Product Title */}
           <h4 
             onClick={() => onOpenProduct(product)}
-            className="font-display font-semibold text-base line-clamp-2 hover:underline cursor-pointer transition-colors"
+            className="font-display font-semibold text-xs sm:text-base line-clamp-2 hover:underline cursor-pointer transition-colors leading-snug"
             style={{ color: theme.textPrimary }}
+            title={product.name}
           >
             {product.name}
           </h4>
 
-          {/* Short feature preview */}
+          {/* Short feature preview (hidden on extra small screens for tight grid) */}
           {product.specs?.[0] && (
-            <p className="text-xs line-clamp-1 mt-1" style={{ color: theme.textMuted }}>
+            <p className="hidden sm:block text-xs line-clamp-1 mt-1 text-zinc-500">
               {product.specs[0].label}: {product.specs[0].value}
             </p>
           )}
         </div>
 
         {/* Price & Add to Cart Footer */}
-        <div className="pt-2 border-t flex items-center justify-between gap-2" style={{ borderColor: theme.border }}>
-          <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-display font-bold text-base tabular-nums" style={{ color: theme.accent }}>
+        <div className="pt-2 border-t flex items-center justify-between gap-1.5" style={{ borderColor: theme.border }}>
+          <div className="min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5">
+              <span className="font-display font-bold text-xs sm:text-base tabular-nums truncate block" style={{ color: theme.accent }}>
                 Rs. {product.price.toLocaleString()}
               </span>
               {product.originalPrice && (
-                <span className="text-[11px] line-through tabular-nums" style={{ color: theme.textMuted }}>
+                <span className="text-[9px] sm:text-[11px] line-through tabular-nums text-zinc-400 block sm:inline">
                   Rs. {product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
-            <span className="text-[10px] block" style={{ color: theme.textMuted }}>
+            <span className="text-[9px] sm:text-[10px] text-zinc-400 hidden sm:block">
               Cash on delivery
             </span>
           </div>
 
           <button
             onClick={() => onAddToCart(product)}
-            className="px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 flex items-center gap-1.5 cursor-pointer hover:opacity-90 active:scale-95 shadow-sm"
+            className="px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all duration-150 flex items-center gap-1 sm:gap-1.5 cursor-pointer hover:opacity-90 active:scale-95 shadow-xs shrink-0"
             style={{
               backgroundColor: theme.accent,
               color: theme.accentText,
             }}
             title="Add to Cart"
           >
-            <ShoppingCart className="w-3.5 h-3.5" />
-            <span>Add to Cart</span>
+            <ShoppingCart className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+            <span className="hidden xs:inline sm:inline">Add</span>
           </button>
         </div>
       </div>

@@ -525,7 +525,7 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       placeholder="e.g. Muhammad Ali"
-                      className="w-full px-3.5 py-2.5 rounded-xl border text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border text-base sm:text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
                       style={{ borderColor: theme.border }}
                     />
                   </div>
@@ -544,7 +544,7 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       placeholder="0300-1234567"
-                      className="w-full px-3.5 py-2.5 rounded-xl border text-xs text-zinc-900 bg-white placeholder-zinc-400 font-mono focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border text-base sm:text-xs text-zinc-900 bg-white placeholder-zinc-400 font-mono focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
                       style={{ borderColor: theme.border }}
                     />
                   </div>
@@ -560,7 +560,7 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="e.g. Lahore, Karachi, Islamabad"
-                      className="w-full px-3.5 py-2.5 rounded-xl border text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                      className="w-full px-3.5 py-2.5 rounded-xl border text-base sm:text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
                       style={{ borderColor: theme.border }}
                     />
                     <div className="flex flex-wrap gap-1.5 pt-1">
@@ -594,7 +594,7 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
                       value={customerAddress}
                       onChange={(e) => setCustomerAddress(e.target.value)}
                       placeholder="House / Flat #, Street name, Sector / Area landmark..."
-                      className="w-full px-3.5 py-2 rounded-xl border text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
+                      className="w-full px-3.5 py-2 rounded-xl border text-base sm:text-xs text-zinc-900 bg-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#d4af37]"
                       style={{ borderColor: theme.border }}
                     />
                   </div>
