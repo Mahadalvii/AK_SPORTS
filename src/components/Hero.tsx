@@ -42,20 +42,20 @@ export const Hero: React.FC<HeroProps> = ({
               className="font-display text-2xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] sm:leading-[1.1] text-balance"
               style={{ color: theme.textPrimary }}
             >
-              Everyday athletic wear. <br />
+              Performance gear. <br />
               <span 
                 className="bg-clip-text text-transparent bg-gradient-to-r"
                 style={{
                   backgroundImage: `linear-gradient(135deg, #b89428 0%, #d4af37 50%, #99751f 100%)`
                 }}
               >
-                Engineered for life.
+                Designed for daily wear.
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-xs sm:text-base leading-relaxed max-w-2xl" style={{ color: theme.textMuted }}>
-              Premium four-way stretch joggers, heavy-cotton drop-shoulder tees, and moisture-wicking tracksuits built for gym and daily streetwear—paired with handcrafted tournament tape ball cricket gear from Sialkot.
+              Flexible everyday joggers designed for natural movement, and performance tracksuits that keep you comfortable and dry.
             </p>
 
             {/* Action Buttons: Full width on mobile, inline on desktop */}
@@ -68,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({
                   color: theme.accentText,
                 }}
               >
-                <span>Shop Athletic Wear</span>
+                <span>Explore apparel</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -81,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({
                   backgroundColor: theme.cardBg,
                 }}
               >
-                Tape Ball Cricket
+                Tape Ball
               </button>
             </div>
 
