@@ -1,0 +1,21 @@
+{
+  "name": "AK Sports — Athletic Wear & Cricket",
+  "short_name": "AK Sports",
+  "description": "Everyday engineered athletic wear, 4-way stretch flex trousers, heavy-cotton tees, and Sialkot handcrafted tape ball cricket gear with Cash on Delivery across Pakistan.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f7f4",
+  "theme_color": "#d4af37",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/ak_sports_logo_centered.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

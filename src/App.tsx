@@ -11,6 +11,7 @@ import { BrandStory } from './components/BrandStory';
 import { CategoryPage } from './components/CategoryPage';
 import { Footer } from './components/Footer';
 import { AdminDashboard } from './components/admin/AdminDashboard';
+import { updatePageSEO } from './lib/seo';
 import { PRODUCTS, THEMES, REVIEWS, FEATURED_VIDEO_SLIDES } from './data/products';
 import { Product, CartItem } from './types';
 import { 
@@ -55,6 +56,11 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  // Update dynamic SEO meta tags, title, canonical, and breadcrumbs on route change
+  useEffect(() => {
+    updatePageSEO(currentPage);
+  }, [currentPage]);
   
   // Initial cart with the flagship everyday athletic trousers
   const [cartItems, setCartItems] = useState<CartItem[]>([

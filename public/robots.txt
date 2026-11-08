@@ -1,0 +1,20 @@
+# AK Sports Store - Search Engine Robots Configuration
+# https://ak-sports.vercel.app
+
+User-agent: *
+Allow: /
+Allow: /apparel
+Allow: /bats
+Allow: /gloves
+Allow: /accessories
+Allow: /cart
+
+# Exclude protected admin portal from indexation
+Disallow: /admin
+Disallow: /admin/*
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Sitemap Location
+Sitemap: https://ak-sports.vercel.app/sitemap.xml
