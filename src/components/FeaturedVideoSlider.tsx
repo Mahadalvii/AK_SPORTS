@@ -300,7 +300,7 @@ export const FeaturedVideoSlider: React.FC<FeaturedVideoSliderProps> = ({
             {/* Modal Footer with Direct Shop Action */}
             <div className="p-3 sm:p-4 bg-zinc-900/90 border-t border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <p className="text-[11px] sm:text-xs text-zinc-400">
-                Crafted in Sialkot with master fabricators. High-durability stitching.
+                Crafted with master fabricators and inspected at our Bahawalnagar outlet.
               </p>
               {targetProduct && (
                 <button

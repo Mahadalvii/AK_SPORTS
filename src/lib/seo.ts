@@ -11,7 +11,7 @@ export interface PageSEOMetadata {
 
 export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
   home: {
-    title: 'AK Sports — Everyday Athletic Wear & Handcrafted Sialkot Cricket',
+    title: 'AK Sports — Everyday Athletic Wear & Handcrafted Cricket Gear',
     description: 'Shop AK Sports engineered 4-way stretch athletic trousers, 280 GSM combed cotton training tees, and championship handcrafted tape ball bats with Cash on Delivery nationwide in Pakistan.',
     canonicalPath: '/',
     keywords: [
@@ -19,7 +19,8 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
       'athletic wear Pakistan',
       'everyday athletic trousers',
       'tape ball cricket bats',
-      'Sialkot cricket bat factory',
+      'cricket bat factory Pakistan',
+      'Bahawalnagar sports store',
       'combed cotton training tee',
       'stretch joggers Pakistan',
       'COD sports store'
@@ -39,7 +40,7 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
       '4-way flex joggers',
       'heavyweight training tee',
       'dry fit sports kit',
-      'activewear Sialkot',
+      'activewear Pakistan',
       'men athletic trousers'
     ],
     ogType: 'website',
@@ -49,13 +50,13 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
     ],
   },
   bats: {
-    title: 'Tape Ball Cricket Division — Handcrafted Sialkot Willow Bats | AK Sports',
-    description: 'Handcrafted Sialkot English willow tape ball cricket bats with 48mm–50mm massive edge profiles, feather-light pickup balance, and aerodynamic tournament balls. Cash on Delivery across Pakistan.',
+    title: 'Tape Ball Cricket Division — Handcrafted Willow Bats | AK Sports',
+    description: 'Handcrafted English willow tape ball cricket bats with 48mm–50mm massive edge profiles, feather-light pickup balance, and aerodynamic tournament balls. Cash on Delivery across Pakistan.',
     canonicalPath: '/bats',
     keywords: [
       'tape ball bats',
       'AK Gold Edition bat',
-      'Sialkot cricket bats',
+      'handcrafted cricket bats',
       '48mm edge bat',
       'tournament tape balls',
       'best tape ball bat Pakistan',
@@ -86,7 +87,7 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
   },
   accessories: {
     title: 'Accessories & Upgrades — Bat Grips & Maintenance | AK Sports',
-    description: 'Premium chevron matrix non-slip bat grips, protective gear maintenance, and equipment accessories from Sialkot factory direct.',
+    description: 'Premium chevron matrix non-slip bat grips, protective gear maintenance, and equipment accessories factory direct.',
     canonicalPath: '/accessories',
     keywords: [
       'cricket accessories',
@@ -102,7 +103,7 @@ export const SEO_PAGE_METADATA: Record<PageId, PageSEOMetadata> = {
   },
   cart: {
     title: 'Shopping Cart & Express COD Checkout | AK Sports',
-    description: 'Review your cart and place your Cash on Delivery (COD) order with nationwide dispatch from our Sialkot workshop across Pakistan.',
+    description: 'Review your cart and place your Cash on Delivery (COD) order with nationwide dispatch from our Bahawalnagar outlet across Pakistan.',
     canonicalPath: '/cart',
     keywords: ['AK Sports cart', 'COD checkout', 'cash on delivery sports Pakistan'],
     ogType: 'website',

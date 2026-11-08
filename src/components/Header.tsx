@@ -256,7 +256,7 @@ export const Header: React.FC<HeaderProps> = ({
                       AK SPORTS
                     </span>
                     <span className="text-[9px] uppercase font-semibold text-[#b89428] block">
-                      Sialkot Craft &amp; Apparel
+                      Bahawalnagar Outlet · Sialkot Factory
                     </span>
                   </div>
                 </div>
@@ -343,8 +343,8 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Drawer Footer */}
             <div className="pt-4 border-t text-[11px] text-zinc-500 space-y-1" style={{ borderColor: theme.border }}>
-              <p className="font-medium text-zinc-800">AK Sports Sialkot Workshop</p>
-              <p>Cash on Delivery across Pakistan</p>
+              <p className="font-medium text-zinc-800">AK Sports Main Outlet: Cantt Road, Bahawalnagar</p>
+              <p>Factory Unit: Sialkot · COD across Pakistan</p>
             </div>
           </div>
 

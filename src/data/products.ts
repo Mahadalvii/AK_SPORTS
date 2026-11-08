@@ -107,7 +107,7 @@ export const PRODUCTS: Product[] = [
       { label: 'Pockets', value: 'Dual Zippered Deep Phone Pockets' },
       { label: 'Waistband', value: 'Internal Drawcord + Ribbed Stretch' },
       { label: 'Care', value: 'Machine Wash Cold / Quick Dry' },
-      { label: 'Origin', value: 'Sialkot Textile Mills, Pakistan' },
+      { label: 'Origin', value: 'Bahawalnagar Outlet · Sialkot Mills' },
     ],
     features: [
       'Ultra-breathable fabric that prevents cling and sweat buildup',
@@ -185,14 +185,14 @@ export const PRODUCTS: Product[] = [
     reviewsCount: 148,
     image: '/images/products/cricket_bat_gold_pro_1794057613027.jpg',
     tag: 'Gold Standard',
-    description: 'Engineered specifically for heavy tape ball tournaments. Handcrafted in Sialkot with triple-pressed premium English willow, full curved blade profile, and 48mm massive edges for effortless maximum six hitting.',
+    description: 'Engineered specifically for heavy tape ball tournaments. Handcrafted with triple-pressed premium English willow, full curved blade profile, and 48mm massive edges for effortless maximum six hitting.',
     specs: [
       { label: 'Blade Length', value: '35 Inches Full Blade' },
       { label: 'Edge Thickness', value: '48mm Massive Contoured' },
       { label: 'Weight Range', value: '780g - 840g Light Balance' },
       { label: 'Handle Construction', value: '3-Piece Singapore Cane + Carbon' },
       { label: 'Sweet Spot', value: 'Mid-to-Low Extended' },
-      { label: 'Origin', value: 'Sialkot, Pakistan' },
+      { label: 'Origin', value: 'Bahawalnagar Outlet (Factory: Sialkot)' },
     ],
     features: [
       'Pre-knocked and ready for high-speed tournament play',
@@ -322,8 +322,8 @@ export const TRUST_PROMISES = [
     icon: 'Banknote',
   },
   {
-    title: 'Handcrafted in Sialkot',
-    description: 'Direct factory quality from Pakistan’s sports manufacturing capital with zero middleman price inflation.',
+    title: 'Master Handcrafted Quality',
+    description: 'Crafted at our Sialkot factory unit and inspected at our Bahawalnagar main outlet with zero middleman price inflation.',
     icon: 'Hammer',
   },
   {

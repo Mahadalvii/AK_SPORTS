@@ -63,7 +63,7 @@ export const CartPage: React.FC<CartPageProps> = ({
   const amountNeeded = Math.max(0, freeShippingThreshold - subtotal);
 
   const majorCities = [
-    'Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Sialkot', 
+    'Bahawalnagar', 'Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Sialkot', 
     'Faisalabad', 'Multan', 'Peshawar', 'Gujranwala', 'Quetta'
   ];
 
@@ -173,7 +173,7 @@ export const CartPage: React.FC<CartPageProps> = ({
 *Items:*
 ${orderPlaced.items.map(it => `• ${it.name} (x${it.quantity})${it.size ? ` [${it.size}]` : ''}`).join('\n')}
 
-Please confirm dispatch from Sialkot workshop. JazakAllah!`;
+Please confirm dispatch from Bahawalnagar outlet. JazakAllah!`;
     return `https://wa.me/923082073415?text=${encodeURIComponent(message)}`;
   };
 
@@ -224,7 +224,7 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
                 Thank You for Choosing AK Sports!
               </h1>
               <p className="text-sm text-zinc-600 max-w-lg mx-auto">
-                Your order has been recorded. Our Sialkot workshop team is packaging your gear for nationwide courier dispatch.
+                Your order has been recorded. Our Bahawalnagar outlet team is packaging your gear for nationwide courier dispatch.
               </p>
             </div>
 
@@ -469,8 +469,8 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
                 <div className="p-3.5 rounded-xl border flex items-center gap-2.5 shadow-2xs" style={{ backgroundColor: theme.cardBg, borderColor: theme.border }}>
                   <PackageCheck className="w-4 h-4 shrink-0" style={{ color: theme.accent }} />
                   <div className="text-[11px] leading-snug">
-                    <strong className="block text-zinc-900">Sialkot Direct Craft</strong>
-                    <span className="text-zinc-500">Workshop-level QC</span>
+                    <strong className="block text-zinc-900">Factory-Direct Quality</strong>
+                    <span className="text-zinc-500">Inspected in Bahawalnagar</span>
                   </div>
                 </div>
 
@@ -669,7 +669,7 @@ Please confirm dispatch from Sialkot workshop. JazakAllah!`;
                   </button>
 
                   <p className="text-[10px] text-center text-zinc-500">
-                    By clicking Confirm, your order is dispatched from Sialkot. You pay upon receiving the parcel.
+                    By clicking Confirm, your order is dispatched from our Bahawalnagar outlet. You pay upon receiving the parcel.
                   </p>
                 </form>
 

@@ -45,7 +45,7 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
                 {!imageError ? (
                   <img
                     src="/images/saad_ashraf_alvi.jpg"
-                    alt="Saad Ashraf Alvi in Sialkot Workshop with Handcrafted AK Bats"
+                    alt="Saad Ashraf Alvi with Handcrafted AK Bats at Main Outlet"
                     onError={() => setImageError(true)}
                     className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
                   />
@@ -102,7 +102,7 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
                   Saad Ashraf Alvi
                 </h3>
                 <p className="text-xs text-zinc-200 leading-relaxed max-w-sm font-light">
-                  Founder of AK Sports · Sialkot Workshop
+                  Founder of AK Sports · Main Outlet: Bahawalnagar
                 </p>
               </div>
 
@@ -134,7 +134,7 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
                   </p>
 
                   <p>
-                    That is why I created <strong>AK Sports</strong>. We personally import hand-selected raw cricket wood directly from Sri Lanka, and bring every single cleft into our workshop in Sialkot. There, we shave, balance, press, and refine each blade with 48mm+ massive edges and feather-light pickup—tailoring it to each player’s personal budget and stroke style, without any corporate middleman markups.
+                    That is why I created <strong>AK Sports</strong>. We personally import hand-selected raw cricket wood directly from Sri Lanka, craft it with precision at our Sialkot factory unit, and inspect every finished blade at our main outlet in Bahawalnagar. There, each blade is shaped, balanced, pressed, and refined with 48mm+ massive edges and feather-light pickup—tailoring it to each player’s personal budget and stroke style, without any corporate middleman markups.
                   </p>
                 </div>
 

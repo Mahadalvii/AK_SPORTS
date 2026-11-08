@@ -37,9 +37,9 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
       case 'bats':
         return {
           title: 'Tape Ball Cricket Division',
-          subtitle: 'Handcrafted Sialkot English willow bats with 48mm+ massive edges and tournament balls.',
+          subtitle: 'Handcrafted English willow bats with 48mm+ massive edges and tournament balls.',
           category: 'bats',
-          badge: 'Sialkot Master Workshop',
+          badge: 'Handcrafted Player Division',
           description: 'Custom blade profiles carved for maximum pickup balance, explosive sweet spots, and high rebound ping against tournament tape balls.',
         };
       case 'gloves':
@@ -64,7 +64,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
           subtitle: 'Everyday athletic wear and championship cricket gear.',
           category: 'all',
           badge: 'All Products',
-          description: 'Explore the full range of Sialkot handcrafted gear and modern apparel.',
+          description: 'Explore the full range of handcrafted gear and modern apparel.',
         };
     }
   }, [pageId]);

@@ -51,7 +51,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
             </button>
 
             <p className="text-xs leading-relaxed max-w-sm" style={{ color: theme.textMuted }}>
-              Engineered everyday athletic trousers, heavy-cotton training tees, active joggers, and championship handcrafted tape ball cricket gear from Sialkot.
+              Engineered everyday athletic trousers, heavy-cotton training tees, active joggers, and championship handcrafted tape ball cricket gear.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -136,13 +136,14 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
             </ul>
           </div>
 
-          {/* Order Terms & Workshop Location */}
+          {/* Order Terms & Outlet Location */}
           <div className="space-y-3">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider" style={{ color: theme.accent }}>
-              Workshop &amp; Delivery
+              Outlet &amp; Delivery
             </h4>
             <div className="space-y-2 text-xs" style={{ color: theme.textMuted }}>
-              <p>📍 Small Industrial Estate, Sialkot, Punjab, Pakistan</p>
+              <p>📍 <strong>Main Outlet:</strong> Cantt Road, Near Haider Stadium, Bahawalnagar</p>
+              <p>🏭 <strong>Factory Unit:</strong> Sialkot, Punjab</p>
               <p>🚚 2–4 Business Days Delivery across Pakistan via TCS &amp; Leopards</p>
               <p>💵 Cash On Delivery (COD) accepted nationwide</p>
             </div>
@@ -167,7 +168,7 @@ export const Footer: React.FC<FooterProps> = ({ theme, onNavigate, onOpenLookup 
           style={{ borderColor: theme.border, color: theme.textMuted }}
         >
           <div>
-            © {new Date().getFullYear()} AK Sports. Handcrafted in Sialkot, Pakistan.
+            © {new Date().getFullYear()} AK Sports. Main Outlet: Bahawalnagar · Factory: Sialkot.
           </div>
 
           <div className="flex items-center gap-4">

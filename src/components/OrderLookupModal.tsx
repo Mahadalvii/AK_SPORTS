@@ -67,7 +67,7 @@ export const OrderLookupModal: React.FC<OrderLookupModalProps> = ({
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
             <PackageCheck className="w-3.5 h-3.5" />
-            <span>Confirmed by Sialkot Workshop</span>
+            <span>Confirmed by AK Sports Outlet (Bahawalnagar)</span>
           </span>
         );
       case 'dispatched':
@@ -117,7 +117,7 @@ export const OrderLookupModal: React.FC<OrderLookupModalProps> = ({
             </div>
             <div>
               <h3 className="font-display font-bold text-base sm:text-lg">Track Your Order</h3>
-              <p className="text-[11px] text-zinc-500">Real-time status direct from our Sialkot database</p>
+              <p className="text-[11px] text-zinc-500">Real-time status direct from our order database</p>
             </div>
           </div>
           <button 

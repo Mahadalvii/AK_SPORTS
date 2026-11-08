@@ -70,7 +70,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
 
     if (!city.trim()) {
-      setErrorMessage('Please enter your city (e.g. Lahore, Karachi, Sialkot).');
+      setErrorMessage('Please enter your city (e.g. Bahawalnagar, Lahore, Karachi).');
       setIsSubmitting(false);
       return;
     }
@@ -141,7 +141,7 @@ Mobile: ${orderPlaced.phone}
 City: ${orderPlaced.city}
 Total (COD): Rs. ${orderPlaced.total.toLocaleString()}
 
-Please confirm dispatch from Sialkot workshop. JazakAllah!`;
+Please confirm dispatch from Bahawalnagar outlet. JazakAllah!`;
       return `https://wa.me/923082073415?text=${encodeURIComponent(confirmedMsg)}`;
     }
 
@@ -211,7 +211,7 @@ Please confirm delivery time and dispatch.`;
             </h4>
             <p className="text-xs text-zinc-600">
               Your official order ID is <span className="font-mono font-bold text-[#b89428] text-sm">{orderPlaced.orderId}</span>. 
-              Our Sialkot workshop has recorded your order for courier dispatch.
+              Our Bahawalnagar outlet has recorded your order for courier dispatch.
             </p>
             <div className="p-4 rounded-xl border w-full text-left text-xs space-y-2.5" style={{ backgroundColor: theme.bg, borderColor: theme.border }}>
               <div className="flex justify-between">
@@ -440,7 +440,7 @@ Please confirm delivery time and dispatch.`;
                     <div>
                       <input
                         type="text"
-                        placeholder="City (e.g. Lahore, Karachi, Sialkot, Islamabad) *"
+                        placeholder="City (e.g. Bahawalnagar, Lahore, Karachi, Islamabad) *"
                         required
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
@@ -526,7 +526,7 @@ Please confirm delivery time and dispatch.`;
                     {isSubmitting ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>Securing Order in Sialkot...</span>
+                        <span>Securing Your Order...</span>
                       </>
                     ) : (
                       <>
