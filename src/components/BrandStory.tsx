@@ -6,9 +6,10 @@ import {
   MessageCircle, 
   Sparkles, 
   Trophy, 
-  CheckCircle2, 
   Award,
-  ArrowRight
+  ArrowRight,
+  ExternalLink,
+  Heart
 } from 'lucide-react';
 import { ThemeConfig } from '../types';
 import { TRUST_PROMISES } from '../data/products';
@@ -20,6 +21,7 @@ interface BrandStoryProps {
 
 export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCategory }) => {
   const [imageError, setImageError] = useState(false);
+  const ownerFacebookUrl = "https://web.facebook.com/saad786007";
 
   return (
     <section className="py-10 sm:py-16 md:py-24 border-b" style={{ borderColor: theme.border }}>
@@ -35,17 +37,17 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
             
-            {/* Left Column: CEO Portrait Stage */}
-            <div className="lg:col-span-5 relative bg-gradient-to-b from-[#18181b] to-black text-white flex flex-col justify-between overflow-hidden min-h-[380px] lg:min-h-[520px]">
+            {/* Left Column: Authentic CEO Workshop Photo */}
+            <div className="lg:col-span-5 relative bg-[#0c0c0e] text-white flex flex-col justify-between overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[560px]">
               
-              {/* Image Container with Fallback */}
+              {/* Photo Container */}
               <div className="absolute inset-0 z-0">
                 {!imageError ? (
                   <img
                     src="/images/saad_ashraf_alvi.jpg"
-                    alt="Saad Ashraf Alvi — Founder & CEO of AK Sports"
+                    alt="Saad Ashraf Alvi in Sialkot Workshop with Handcrafted AK Bats"
                     onError={() => setImageError(true)}
-                    className="w-full h-full object-cover object-top opacity-90 transition-transform duration-700 hover:scale-105"
+                    className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
                   />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-radial from-zinc-900 to-black">
@@ -65,89 +67,83 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
                   </div>
                 )}
 
-                {/* Subtle gradient scrim */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                {/* Subtle gradient scrim at top and bottom to keep text legible */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/60 pointer-events-none" />
               </div>
 
-              {/* Top Badge */}
-              <div className="relative z-10 p-5 sm:p-6 flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-[#d4af37]/60 text-[10px] sm:text-xs font-semibold text-[#f3e08b] uppercase tracking-wider shadow-md">
+              {/* Top Badge Overlay */}
+              <div className="relative z-10 p-4 sm:p-6 flex items-center justify-between">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#d4af37]/70 text-[10px] sm:text-xs font-semibold text-[#f3e08b] uppercase tracking-wider shadow-md">
                   <Award className="w-3.5 h-3.5 text-[#d4af37]" />
-                  <span>Founder &amp; CEO</span>
+                  <span>Founder &amp; Player</span>
                 </span>
-                <span className="text-[10px] font-mono text-zinc-300 bg-black/60 px-2 py-0.5 rounded border border-white/10">
-                  Est. Sialkot
-                </span>
+                
+                <a
+                  href={ownerFacebookUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 hover:bg-black/95 text-[10px] sm:text-[11px] font-medium text-zinc-300 hover:text-white border border-white/15 transition-colors shadow-sm"
+                  title="View Saad's public profile on Facebook"
+                >
+                  <span>@saad786007</span>
+                  <ExternalLink className="w-3 h-3 text-[#d4af37]" />
+                </a>
               </div>
 
               {/* Bottom Portrait Caption */}
-              <div className="relative z-10 p-5 sm:p-6 space-y-2">
-                <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4 text-[#d4af37]" />
-                  <span className="text-xs font-mono uppercase tracking-wider text-[#d4af37]">
-                    Professional Tape Ball Player
+              <div className="relative z-10 p-4 sm:p-6 space-y-1.5">
+                <div className="flex items-center gap-1.5">
+                  <Trophy className="w-3.5 h-3.5 text-[#d4af37]" />
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#d4af37] font-semibold">
+                    Local Tape Ball Competitor
                   </span>
                 </div>
                 <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-white leading-tight">
                   Saad Ashraf Alvi
                 </h3>
-                <p className="text-xs text-zinc-300 leading-relaxed max-w-sm">
-                  "Cricket has always been my life. Building AK Sports is how I share that passion with every player who steps onto the pitch."
+                <p className="text-xs text-zinc-200 leading-relaxed max-w-sm font-light">
+                  Founder of AK Sports · Sialkot Workshop
                 </p>
               </div>
 
             </div>
 
-            {/* Right Column: Backstory, Vision, Srilankan Willow & Quality */}
+            {/* Right Column: Emotional, Humanized Backstory & Quality Promise */}
             <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-between space-y-6">
               
               <div className="space-y-5">
                 {/* Section Kicker */}
                 <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#b89428]">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>The Founder's Vision &amp; Craftsmanship</span>
+                  <Heart className="w-3.5 h-3.5 fill-[#b89428]" />
+                  <span>The Story Behind AK Sports</span>
                 </div>
 
-                {/* Story Headline */}
-                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 leading-tight">
-                  Born from the pitch. Built for players who demand the best.
+                {/* Emotional Story Headline */}
+                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 leading-snug">
+                  "I didn't start this brand to do business. I started it because cricket is my whole life."
                 </h2>
 
-                {/* Narrative Paragraph 1: Player Background */}
-                <p className="text-xs sm:text-sm leading-relaxed text-zinc-600">
-                  As a competitive and well-known local tape ball player, <strong>Saad Ashraf Alvi</strong> lived and breathed cricket from inside the boundary ropes. For him, cricket was never just a hobby—it was a life calling. He always dreamed of dedicating his life to the sport, and <strong>AK Sports</strong> is the realization of that lifelong commitment.
-                </p>
+                {/* Narrative: Natural, Humanized, Emotional */}
+                <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-zinc-600">
+                  <p>
+                    Ever since I was a young boy, every evening of my life was spent on local dusty pitches, running with a taped tennis ball in hand, dreaming of the perfect stroke. Cricket was never just a weekend hobby for me—it was my obsession, my sanctuary, and my identity.
+                  </p>
 
-                {/* Narrative Paragraph 2: Sri Lankan Wood & Sialkot Workshop Refinement */}
-                <p className="text-xs sm:text-sm leading-relaxed text-zinc-600">
-                  To ensure world-class performance, <strong>we directly import select raw cricket wood from Sri Lanka</strong>. Every single cleft is then transported to our dedicated workshop in <strong>Sialkot</strong>, where our master artisans season, plane, contour, and balance each blade to match our customers' exact playing style, stroke profile, and weight preferences—all delivered within an honest, effective budget.
-                </p>
+                  <p>
+                    As a competitive local player myself, I know the heartbreak every cricketer feels: buying an expensive bat with hard-earned money, only for it to feel dead in the hands, poorly balanced, or snap when you need it most. I knew tape ball players deserved something real—crafted with honesty, heart, and respect for their game.
+                  </p>
 
-                {/* Quality Highlights Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-                  <div className="p-3.5 rounded-xl border bg-[#fcfbf9] flex items-start gap-3" style={{ borderColor: theme.border }}>
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 border border-[#b89428] text-[#b89428] font-bold text-xs">
-                      ✓
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-zinc-900">Direct Sri Lankan Wood Import</h4>
-                      <p className="text-[11px] text-zinc-500 mt-0.5">
-                        Selected raw clefts cured and hand-refined in Sialkot for supreme ping and explosive rebound.
-                      </p>
-                    </div>
-                  </div>
+                  <p>
+                    That is why I created <strong>AK Sports</strong>. We personally import hand-selected raw cricket wood directly from Sri Lanka, and bring every single cleft into our workshop in Sialkot. There, we shave, balance, press, and refine each blade with 48mm+ massive edges and feather-light pickup—tailoring it to each player’s personal budget and stroke style, without any corporate middleman markups.
+                  </p>
+                </div>
 
-                  <div className="p-3.5 rounded-xl border bg-[#fcfbf9] flex items-start gap-3" style={{ borderColor: theme.border }}>
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 border border-[#b89428] text-[#b89428] font-bold text-xs">
-                      ✓
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-zinc-900">Tailored Within Player Budgets</h4>
-                      <p className="text-[11px] text-zinc-500 mt-0.5">
-                        Custom blade profiling, 48mm+ massive edges, and feather-light pickup without retail middleman markup.
-                      </p>
-                    </div>
-                  </div>
+                {/* Signature quote callout */}
+                <div className="p-4 rounded-xl bg-[#faf8f4] border-l-3 border-[#d4af37] text-xs sm:text-sm text-zinc-800 italic leading-relaxed">
+                  "When you hold an AK bat, remember: it was shaped by hands that love this game just as fiercely as you do. Every grain, every curve, and every ping is tested so you can walk out to the crease with pride."
+                  <span className="block not-italic font-bold text-xs text-zinc-900 mt-2">
+                    — Saad Ashraf Alvi
+                  </span>
                 </div>
               </div>
 
@@ -165,16 +161,26 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
                 </button>
 
                 <a
-                  href="https://wa.me/923082073415?text=Salam%20Saad%20Bhai!%20I%20want%20to%20discuss%20a%20custom%20handcrafted%20bat%20from%20AK%20Sports"
+                  href={ownerFacebookUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all cursor-pointer flex items-center justify-center gap-2 hover:bg-black/5 shadow-xs text-zinc-800"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all cursor-pointer flex items-center justify-center gap-2 hover:bg-black/5 shadow-xs text-zinc-800"
                   style={{
                     borderColor: theme.border,
                   }}
                 >
-                  <MessageCircle className="w-4 h-4 text-emerald-600" />
-                  <span>Talk with Saad on WhatsApp</span>
+                  <span>A Peek into Saad's Life (Facebook)</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-[#b89428]" />
+                </a>
+
+                <a
+                  href="https://wa.me/923082073415?text=Salam%20Saad%20Bhai!%20I%20want%20to%20discuss%20a%20custom%20handcrafted%20bat%20from%20AK%20Sports"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white transition-all cursor-pointer flex items-center justify-center gap-2 shadow-xs text-center"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp Saad</span>
                 </a>
               </div>
 
