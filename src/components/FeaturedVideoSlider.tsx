@@ -21,24 +21,48 @@ export const FeaturedVideoSlider: React.FC<FeaturedVideoSliderProps> = ({
   const [isPlayingVideoModal, setIsPlayingVideoModal] = useState<VideoSlide | null>(null);
   const [isMuted, setIsMuted] = useState(true);
 
+  const activeSlides: VideoSlide[] = React.useMemo(() => {
+    if (slides && slides.length > 0) return slides;
+    return products
+      .filter((p) => p.isFeatured || p.videoUrl)
+      .slice(0, 5)
+      .map((p) => ({
+        id: `slide-${p.id}`,
+        title: p.name,
+        subtitle: p.description,
+        categoryTag: p.categoryLabel || p.category,
+        videoDuration: 'Demo',
+        thumbnailUrl: p.image,
+        videoTitle: p.name,
+        productTargetId: p.id,
+        buttonLabel: 'Shop',
+        viewsCount: 'Featured',
+      }));
+  }, [slides, products]);
+
   // Auto slide every 6 seconds if modal is not open
   useEffect(() => {
-    if (isPlayingVideoModal) return;
+    if (isPlayingVideoModal || activeSlides.length <= 1) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
+      setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [slides.length, isPlayingVideoModal]);
+  }, [activeSlides.length, isPlayingVideoModal]);
 
-  const currentSlide = slides[currentIndex];
+  if (activeSlides.length === 0) {
+    return null;
+  }
+
+  const safeIndex = currentIndex % activeSlides.length;
+  const currentSlide = activeSlides[safeIndex];
   const targetProduct = products.find((p) => p.id === currentSlide.productTargetId);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % slides.length);
+    setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentIndex((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
   };
 
   return (
@@ -53,7 +77,7 @@ export const FeaturedVideoSlider: React.FC<FeaturedVideoSliderProps> = ({
         </div>
         <div className="flex items-center gap-1.5">
           <span className="text-[11px] sm:text-xs font-mono" style={{ color: theme.textMuted }}>
-            0{currentIndex + 1} / 0{slides.length}
+            0{safeIndex + 1} / 0{activeSlides.length}
           </span>
           <button
             onClick={handlePrev}
@@ -205,14 +229,14 @@ export const FeaturedVideoSlider: React.FC<FeaturedVideoSliderProps> = ({
 
               {/* Progress Slide Indicators */}
               <div className="flex items-center gap-1.5 pt-1">
-                {slides.map((s, idx) => (
+                {activeSlides.map((s, idx) => (
                   <button
                     key={s.id}
                     onClick={() => setCurrentIndex(idx)}
                     className="h-1.5 rounded-full transition-all cursor-pointer"
                     style={{
-                      width: currentIndex === idx ? '28px' : '8px',
-                      backgroundColor: currentIndex === idx ? theme.accent : 'rgba(0,0,0,0.15)',
+                      width: safeIndex === idx ? '28px' : '8px',
+                      backgroundColor: safeIndex === idx ? theme.accent : 'rgba(0,0,0,0.15)',
                     }}
                     title={s.title}
                   />

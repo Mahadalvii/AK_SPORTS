@@ -19,7 +19,7 @@ export interface AdminProductVariant {
 export interface AdminProduct {
   id: string; // slug
   name: string;
-  category: 'apparel' | 'bats' | 'balls' | 'gloves' | 'kits';
+  category: 'apparel' | 'bats' | 'balls' | 'gloves' | 'kits' | 'hardball';
   category_label: string;
   price: number;
   original_price?: number | null;
@@ -394,6 +394,27 @@ export async function deleteAdminProduct(
   if (error) {
     return { success: false, error: error.message };
   }
+  return { success: true };
+}
+
+/**
+ * Delete all products permanently from the catalog
+ */
+export async function deleteAllAdminProducts(): Promise<{ success: boolean; error?: string }> {
+  if (!isSupabaseConfigured() || !supabase) {
+    localStorage.setItem('ak_sports_admin_products', JSON.stringify([]));
+    return { success: true };
+  }
+
+  const { error } = await supabase
+    .from('products')
+    .delete()
+    .neq('id', '');
+
+  if (error) {
+    return { success: false, error: error.message };
+  }
+  localStorage.removeItem('ak_sports_admin_products');
   return { success: true };
 }
 

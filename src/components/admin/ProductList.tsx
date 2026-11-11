@@ -16,7 +16,7 @@ import {
   Loader2,
   Database
 } from 'lucide-react';
-import { AdminProduct, seedDefaultCatalog } from '../../lib/adminApi';
+import { AdminProduct, deleteAllAdminProducts } from '../../lib/adminApi';
 
 interface ProductListProps {
   products: AdminProduct[];
@@ -38,23 +38,26 @@ export const ProductList: React.FC<ProductListProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'hidden'>('all');
-  const [isSeeding, setIsSeeding] = useState(false);
-  const [seedError, setSeedError] = useState<string | null>(null);
+  const [isClearing, setIsClearing] = useState(false);
+  const [clearError, setClearError] = useState<string | null>(null);
 
-  const handleSeedCatalog = async () => {
-    setIsSeeding(true);
-    setSeedError(null);
+  const handleClearCatalog = async () => {
+    if (!window.confirm('Permanently delete ALL products from the website catalog? This cannot be undone.')) {
+      return;
+    }
+    setIsClearing(true);
+    setClearError(null);
     try {
-      const res = await seedDefaultCatalog();
+      const res = await deleteAllAdminProducts();
       if (res.success) {
         onReload();
       } else {
-        setSeedError(res.error || 'Failed to seed catalog');
+        setClearError(res.error || 'Failed to delete all products');
       }
     } catch (err: any) {
-      setSeedError(err.message || 'Error seeding catalog');
+      setClearError(err.message || 'Error deleting all products');
     } finally {
-      setIsSeeding(false);
+      setIsClearing(false);
     }
   };
 
@@ -103,25 +106,27 @@ export const ProductList: React.FC<ProductListProps> = ({
         </div>
 
         <div className="flex items-center gap-2.5">
-          <button
-            onClick={handleSeedCatalog}
-            disabled={isSeeding}
-            className="px-3.5 py-2.5 rounded-xl text-xs font-semibold border border-zinc-700 hover:border-[#d4af37] bg-zinc-900 text-zinc-300 hover:text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
-            title="Import or reset 8 initial showcase products into Supabase"
-          >
-            {isSeeding ? (
-              <>
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                <span>Importing...</span>
-              </>
-            ) : (
-              <>
-                <Database className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span className="hidden sm:inline">Import Default Catalog</span>
-                <span className="sm:hidden">Import Catalog</span>
-              </>
-            )}
-          </button>
+          {products.length > 0 && (
+            <button
+              onClick={handleClearCatalog}
+              disabled={isClearing}
+              className="px-3.5 py-2.5 rounded-xl text-xs font-semibold border border-rose-800/70 hover:border-rose-500 bg-rose-950/40 text-rose-300 hover:text-rose-200 transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+              title="Delete all products from the catalog"
+            >
+              {isClearing ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Deleting...</span>
+                </>
+              ) : (
+                <>
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Delete All Products</span>
+                  <span className="sm:hidden">Delete All</span>
+                </>
+              )}
+            </button>
+          )}
 
           <button
             onClick={onAddNew}
@@ -186,34 +191,24 @@ export const ProductList: React.FC<ProductListProps> = ({
           </div>
           <div className="space-y-1">
             <h3 className="font-display font-bold text-base text-white">
-              No Products in Database Yet
+              Catalog Is Empty &amp; Ready
             </h3>
             <p className="text-xs text-zinc-400 max-w-lg mx-auto leading-relaxed">
-              Import the 8 default showcase items (athletic trousers, heavy-cotton training tee, match kit, Sialkot willow bats, tournament balls, and batting gloves) with 1 click so you can edit pricing, stock, specs, and photos directly in the portal.
+              All previous showcase products have been cleared. Click below to add your new products—they will automatically appear live on the storefront.
             </p>
           </div>
-          {seedError && (
+          {clearError && (
             <div className="text-xs text-rose-400 bg-rose-950/60 p-2.5 rounded-xl border border-rose-800 max-w-md mx-auto">
-              {seedError}
+              {clearError}
             </div>
           )}
           <div className="pt-2">
             <button
-              onClick={handleSeedCatalog}
-              disabled={isSeeding}
-              className="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#d4af37] hover:bg-[#c29e2f] text-black transition-all inline-flex items-center gap-2 shadow-lg cursor-pointer active:scale-95 disabled:opacity-50"
+              onClick={onAddNew}
+              className="px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#d4af37] hover:bg-[#c29e2f] text-black transition-all inline-flex items-center gap-2 shadow-lg cursor-pointer active:scale-95"
             >
-              {isSeeding ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Importing Showcase Products...</span>
-                </>
-              ) : (
-                <>
-                  <Database className="w-4 h-4" />
-                  <span>Import 8 Showcase Products Into Portal</span>
-                </>
-              )}
+              <Plus className="w-4 h-4" />
+              <span>Add Your First Product</span>
             </button>
           </div>
         </div>

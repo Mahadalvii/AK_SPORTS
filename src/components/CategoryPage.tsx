@@ -83,7 +83,9 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
         ? (p.category === 'bats' || p.category === 'balls')
         : pageId === 'hardball'
           ? (p.category === 'hardball')
-          : p.category === meta.category;
+          : pageId === 'accessories'
+            ? (p.category === 'kits' || (p.category as string) === 'accessories')
+            : p.category === meta.category;
 
       const matchesSearch =
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -201,16 +203,32 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
 
         {/* Product Grid: 2 Columns on Mobile, 3 Columns on Tablet/Desktop */}
         {pageProducts.length === 0 ? (
-          <div className="py-16 text-center space-y-3 rounded-2xl border" style={{ borderColor: theme.border, backgroundColor: theme.cardBg }}>
-            <p className="text-base font-semibold text-zinc-900">No products found matching "{searchQuery}"</p>
-            <p className="text-xs text-zinc-500">Try searching with a different term.</p>
-            <button
-              onClick={() => setSearchQuery('')}
-              className="px-4 py-2 text-xs font-semibold rounded-lg border cursor-pointer hover:bg-black/5"
-              style={{ borderColor: theme.border, color: theme.accent }}
-            >
-              Clear Search
-            </button>
+          <div className="py-16 px-4 text-center space-y-3 rounded-2xl border" style={{ borderColor: theme.border, backgroundColor: theme.cardBg }}>
+            {searchQuery.trim() ? (
+              <>
+                <p className="text-base font-semibold text-zinc-900">No products found matching "{searchQuery}"</p>
+                <p className="text-xs text-zinc-500">Try searching with a different term.</p>
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="px-4 py-2 text-xs font-semibold rounded-lg border cursor-pointer hover:bg-black/5"
+                  style={{ borderColor: theme.border, color: theme.accent }}
+                >
+                  Clear Search
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="text-base font-semibold text-zinc-900">No products available in {meta.title} yet</p>
+                <p className="text-xs text-zinc-500 max-w-md mx-auto">New products are being added shortly. Check back soon or contact us on WhatsApp for inquiries.</p>
+                <button
+                  onClick={() => onNavigate('home')}
+                  className="px-4 py-2 text-xs font-semibold rounded-lg border cursor-pointer hover:bg-black/5"
+                  style={{ borderColor: theme.border, color: theme.accent }}
+                >
+                  Back to Home
+                </button>
+              </>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">

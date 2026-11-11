@@ -1,5 +1,6 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { PRODUCTS } from '../data/products';
+import { Product } from '../types';
 
 /**
  * Sanitizes Supabase URL to strip accidental trailing slashes, quotes, or /rest/v1 paths
@@ -38,6 +39,116 @@ export const isSupabaseConfigured = (): boolean => {
 export const supabase: SupabaseClient | null = isSupabaseConfigured()
   ? createClient(supabaseUrl!, supabaseAnonKey!)
   : null;
+
+/**
+ * Maps an admin/database product record into storefront Product shape
+ */
+function mapAdminRowToProduct(p: any, variantsList: any[] = []): Product {
+  const activeVariants = variantsList.filter((v) => v.product_id === p.id);
+  const sizes = activeVariants.length > 0
+    ? activeVariants.map((v) => v.size_or_variant)
+    : undefined;
+  const totalStock = activeVariants.length > 0
+    ? activeVariants.reduce((sum, v) => sum + (v.stock || 0), 0)
+    : (p.stock ?? 20);
+
+  return {
+    id: p.id,
+    name: p.name,
+    category: p.category,
+    categoryLabel: p.category_label || p.category,
+    price: Number(p.price) || 0,
+    originalPrice: p.original_price ? Number(p.original_price) : undefined,
+    rating: Number(p.rating) || 5.0,
+    reviewsCount: Number(p.reviews_count) || 0,
+    image: p.image_url || '/images/ak_sports_logo_centered.png',
+    tag: p.tag || undefined,
+    description: p.description || '',
+    specs: Array.isArray(p.specs) ? p.specs : [],
+    features: Array.isArray(p.features) ? p.features : [],
+    stock: totalStock,
+    sizes,
+    variants: activeVariants.map((v) => ({
+      id: v.id,
+      size: v.size_or_variant,
+      stock: v.stock,
+    })),
+    weight: p.weight || undefined,
+    isFeatured: Boolean(p.is_featured),
+    videoUrl: p.video_url || null,
+  };
+}
+
+/**
+ * Fetches active storefront products from Supabase (or localStorage fallback when offline)
+ */
+export async function getStorefrontProducts(): Promise<Product[]> {
+  if (isSupabaseConfigured() && supabase) {
+    try {
+      const { data: dbProducts, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (!error && dbProducts) {
+        const { data: dbVariants } = await supabase
+          .from('product_variants')
+          .select('*');
+
+        return dbProducts.map((p: any) => mapAdminRowToProduct(p, dbVariants || []));
+      }
+    } catch (err) {
+      console.warn('[AK Sports] Error fetching live products from Supabase:', err);
+    }
+  }
+
+  try {
+    const localSaved = localStorage.getItem('ak_sports_admin_products');
+    if (localSaved) {
+      const parsed = JSON.parse(localSaved);
+      if (Array.isArray(parsed)) {
+        return parsed
+          .filter((p: any) => p.is_active !== false)
+          .map((p: any) => ({
+            id: p.id,
+            name: p.name,
+            category: p.category,
+            categoryLabel: p.category_label || p.category,
+            price: Number(p.price) || 0,
+            originalPrice: p.original_price ? Number(p.original_price) : undefined,
+            rating: Number(p.rating) || 5.0,
+            reviewsCount: Number(p.reviews_count) || 0,
+            image: p.image_url || '/images/ak_sports_logo_centered.png',
+            tag: p.tag || undefined,
+            description: p.description || '',
+            specs: Array.isArray(p.specs) ? p.specs : [],
+            features: Array.isArray(p.features) ? p.features : [],
+            stock: Array.isArray(p.variants) && p.variants.length > 0
+              ? p.variants.reduce((sum: number, v: any) => sum + (v.stock || 0), 0)
+              : 20,
+            sizes: Array.isArray(p.variants) && p.variants.length > 0
+              ? p.variants.map((v: any) => v.size_or_variant)
+              : undefined,
+            variants: Array.isArray(p.variants)
+              ? p.variants.map((v: any) => ({
+                  id: v.id,
+                  size: v.size_or_variant,
+                  stock: v.stock,
+                }))
+              : undefined,
+            weight: p.weight || undefined,
+            isFeatured: Boolean(p.is_featured),
+            videoUrl: p.video_url || null,
+          }));
+      }
+    }
+  } catch (e) {
+    console.warn('[AK Sports] Error reading local product cache:', e);
+  }
+
+  return PRODUCTS;
+}
 
 export interface OrderItemInput {
   product_id: string;
@@ -134,8 +245,9 @@ export async function submitOrder(payload: CreateOrderPayload): Promise<CreateOr
   const cleanAddress = payload.customer_address.trim();
   const cleanCity = payload.city.trim();
 
+  const liveCatalog = await getStorefrontProducts();
   const resolvedItems = payload.items.map((it) => {
-    const prod = PRODUCTS.find((p) => p.id === it.product_id);
+    const prod = liveCatalog.find((p) => p.id === it.product_id) || PRODUCTS.find((p) => p.id === it.product_id);
     const prodName = prod ? prod.name : it.product_id;
     const unitPrice = prod ? prod.price : 0;
     const qty = Math.max(1, it.quantity);

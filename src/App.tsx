@@ -12,6 +12,7 @@ import { CategoryPage } from './components/CategoryPage';
 import { Footer } from './components/Footer';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { updatePageSEO } from './lib/seo';
+import { getStorefrontProducts } from './lib/supabase';
 import { PRODUCTS, THEMES, REVIEWS, FEATURED_VIDEO_SLIDES } from './data/products';
 import { Product, CartItem } from './types';
 import { 
@@ -62,11 +63,21 @@ export default function App() {
   useEffect(() => {
     updatePageSEO(currentPage);
   }, [currentPage]);
+
+  // Storefront live products (from Supabase or local Admin storage)
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+
+  const loadLiveProducts = async () => {
+    const live = await getStorefrontProducts();
+    setProducts(live);
+  };
+
+  useEffect(() => {
+    loadLiveProducts();
+  }, []);
   
-  // Initial cart with the flagship everyday athletic trousers
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { product: PRODUCTS[0], quantity: 1, selectedSize: 'M (31-33")' }
-  ]);
+  // Start with an empty cart
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   // Finalized Minimalist Travertine & Gold theme
   const activeTheme = THEMES['travertine-gold'];
@@ -133,16 +144,20 @@ export default function App() {
 
   const totalCartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Main Page Only: Top 4 Highest-Selling Products (Bestsellers across apparel and cricket)
-  const bestSellingProducts = [
-    PRODUCTS[0], // AK Pro Matrix Flex Athletic Trousers
-    PRODUCTS[3], // AK Gold Edition Pro Bat
-    PRODUCTS[1], // AK Forged Heavy-Cotton Tee
-    PRODUCTS[5], // AK Aerodynamic Pro Tournament Balls (Pack of 6)
-  ];
+  // Main Page Only: Top 4 Highest-Selling / Featured Products
+  const featuredList = products.filter((p) => p.isFeatured);
+  const bestSellingProducts = (featuredList.length > 0 ? featuredList : products).slice(0, 4);
+  const heroProduct = products.find((p) => p.isFeatured) || products[0];
 
   if (currentPage === 'admin') {
-    return <AdminDashboard onExitToStore={() => handleNavigate('home')} />;
+    return (
+      <AdminDashboard
+        onExitToStore={() => {
+          loadLiveProducts();
+          handleNavigate('home');
+        }}
+      />
+    );
   }
 
   return (
@@ -168,7 +183,7 @@ export default function App() {
         <main className="flex-1 space-y-10 sm:space-y-16 md:space-y-20">
           {/* Hero Section */}
           <Hero
-            heroProduct={PRODUCTS[0]}
+            heroProduct={heroProduct}
             onOpenProduct={setSelectedProduct}
             onAddToCart={handleAddToCart}
             onNavigate={handleNavigate}
@@ -179,7 +194,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full">
             <FeaturedVideoSlider
               slides={FEATURED_VIDEO_SLIDES}
-              products={PRODUCTS}
+              products={products}
               onSelectProduct={setSelectedProduct}
               onAddToCart={handleAddToCart}
               theme={activeTheme}
@@ -227,18 +242,32 @@ export default function App() {
               </div>
             </div>
 
-            {/* 4 Best Sellers Grid: 2 columns on mobile, 4 on desktop */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {bestSellingProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onOpenProduct={setSelectedProduct}
-                  onAddToCart={handleAddToCart}
-                  theme={activeTheme}
-                />
-              ))}
-            </div>
+            {/* 4 Hot Selling Products Grid (or empty catalog callout) */}
+            {bestSellingProducts.length === 0 ? (
+              <div
+                className="p-8 sm:p-12 rounded-2xl border text-center space-y-2.5"
+                style={{ backgroundColor: activeTheme.cardBg, borderColor: activeTheme.border }}
+              >
+                <p className="font-display font-bold text-base sm:text-lg text-zinc-900">
+                  No Products Listed Yet
+                </p>
+                <p className="text-xs sm:text-sm text-zinc-600 max-w-md mx-auto">
+                  The catalog is currently cleared and ready for your new collection. Add products from the Admin Portal to feature them here.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {bestSellingProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onOpenProduct={setSelectedProduct}
+                    onAddToCart={handleAddToCart}
+                    theme={activeTheme}
+                  />
+                ))}
+              </div>
+            )}
 
             {/* Separate Category Hub Cards: Direct Portals to Individual Pages */}
             <div className="pt-4 sm:pt-8">
@@ -421,7 +450,7 @@ export default function App() {
         <main className="flex-1">
           <CategoryPage
             pageId={currentPage}
-            products={PRODUCTS}
+            products={products}
             onNavigate={handleNavigate}
             onOpenProduct={setSelectedProduct}
             onAddToCart={handleAddToCart}

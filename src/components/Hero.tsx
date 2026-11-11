@@ -4,7 +4,7 @@ import { Product, ThemeConfig } from '../types';
 import { PageId } from './Header';
 
 interface HeroProps {
-  heroProduct: Product;
+  heroProduct?: Product;
   onOpenProduct: (product: Product) => void;
   onAddToCart: (product: Product) => void;
   onNavigate: (page: PageId) => void;
@@ -122,95 +122,137 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Hero Showcase Card (Trousers / Lead Apparel) */}
+          {/* Right Column: Hero Showcase Card */}
           <div className="lg:col-span-5">
-            <div 
-              className="rounded-2xl border p-3.5 sm:p-5 shadow-lg relative group overflow-hidden transition-all duration-300"
-              style={{
-                backgroundColor: theme.cardBg,
-                borderColor: theme.border,
-              }}
-            >
-              {/* Image Container with Subtle Zoom */}
+            {heroProduct ? (
               <div 
-                className="relative aspect-4/3 sm:aspect-4/3 rounded-xl overflow-hidden cursor-pointer"
-                onClick={() => onOpenProduct(heroProduct)}
-                style={{ backgroundColor: theme.bg }}
+                className="rounded-2xl border p-3.5 sm:p-5 shadow-lg relative group overflow-hidden transition-all duration-300"
+                style={{
+                  backgroundColor: theme.cardBg,
+                  borderColor: theme.border,
+                }}
               >
-                <img
-                  src={heroProduct.image}
-                  alt={heroProduct.name}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                
-                {/* Minimalist Pill Tag */}
+                {/* Image Container with Subtle Zoom */}
                 <div 
-                  className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-bold tracking-wider uppercase shadow-md backdrop-blur-md"
-                  style={{
-                    backgroundColor: theme.accent,
-                    color: theme.accentText,
-                  }}
+                  className="relative aspect-4/3 sm:aspect-4/3 rounded-xl overflow-hidden cursor-pointer"
+                  onClick={() => onOpenProduct(heroProduct)}
+                  style={{ backgroundColor: theme.bg }}
                 >
-                  Featured Daily Essential
-                </div>
-              </div>
-
-              {/* Product Info */}
-              <div className="pt-3 sm:pt-4 space-y-2.5 sm:space-y-3">
-                <div className="flex items-center justify-between text-xs" style={{ color: theme.textMuted }}>
-                  <span className="text-[11px] sm:text-xs">Slim Tapered Cut · Gold Zipper Pockets</span>
-                  <span className="flex items-center gap-1 font-semibold text-[11px] sm:text-xs" style={{ color: theme.accent }}>
-                    ★ {heroProduct.rating} ({heroProduct.reviewsCount})
-                  </span>
-                </div>
-
-                <div className="flex items-start justify-between gap-3">
-                  <h3 
-                    onClick={() => onOpenProduct(heroProduct)}
-                    className="font-display font-bold text-base sm:text-lg hover:underline cursor-pointer leading-snug"
-                    style={{ color: theme.textPrimary }}
-                  >
-                    {heroProduct.name}
-                  </h3>
-                  <div className="text-right shrink-0">
-                    <span className="font-display font-bold text-base sm:text-lg tabular-nums block" style={{ color: theme.accent }}>
-                      Rs. {heroProduct.price.toLocaleString()}
-                    </span>
-                    {heroProduct.originalPrice && (
-                      <span className="text-[11px] sm:text-xs line-through tabular-nums" style={{ color: theme.textMuted }}>
-                        Rs. {heroProduct.originalPrice.toLocaleString()}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Quick Action Buttons */}
-                <div className="grid grid-cols-2 gap-2 pt-1 sm:pt-2">
-                  <button
-                    onClick={() => onOpenProduct(heroProduct)}
-                    className="py-2.5 px-3 rounded-lg text-xs font-semibold border transition-colors cursor-pointer text-center"
-                    style={{
-                      borderColor: theme.border,
-                      backgroundColor: theme.bg,
-                      color: theme.textPrimary,
-                    }}
-                  >
-                    View Specs
-                  </button>
-                  <button
-                    onClick={() => onAddToCart(heroProduct)}
-                    className="py-2.5 px-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center active:scale-95 shadow-sm"
+                  <img
+                    src={heroProduct.image}
+                    alt={heroProduct.name}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  
+                  {/* Minimalist Pill Tag */}
+                  <div 
+                    className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-bold tracking-wider uppercase shadow-md backdrop-blur-md"
                     style={{
                       backgroundColor: theme.accent,
                       color: theme.accentText,
                     }}
                   >
-                    Add to Cart
-                  </button>
+                    Featured Essential
+                  </div>
+                </div>
+
+                {/* Product Info */}
+                <div className="pt-3 sm:pt-4 space-y-2.5 sm:space-y-3">
+                  <div className="flex items-center justify-between text-xs" style={{ color: theme.textMuted }}>
+                    <span className="text-[11px] sm:text-xs">{heroProduct.categoryLabel}</span>
+                    {Boolean(heroProduct.reviewsCount && heroProduct.reviewsCount > 0) && (
+                      <span className="flex items-center gap-1 font-semibold text-[11px] sm:text-xs" style={{ color: theme.accent }}>
+                        ★ {heroProduct.rating} ({heroProduct.reviewsCount})
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 
+                      onClick={() => onOpenProduct(heroProduct)}
+                      className="font-display font-bold text-base sm:text-lg hover:underline cursor-pointer leading-snug"
+                      style={{ color: theme.textPrimary }}
+                    >
+                      {heroProduct.name}
+                    </h3>
+                    <div className="text-right shrink-0">
+                      <span className="font-display font-bold text-base sm:text-lg tabular-nums block" style={{ color: theme.accent }}>
+                        Rs. {heroProduct.price.toLocaleString()}
+                      </span>
+                      {heroProduct.originalPrice && (
+                        <span className="text-[11px] sm:text-xs line-through tabular-nums" style={{ color: theme.textMuted }}>
+                          Rs. {heroProduct.originalPrice.toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Quick Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2 pt-1 sm:pt-2">
+                    <button
+                      onClick={() => onOpenProduct(heroProduct)}
+                      className="py-2.5 px-3 rounded-lg text-xs font-semibold border transition-colors cursor-pointer text-center"
+                      style={{
+                        borderColor: theme.border,
+                        backgroundColor: theme.bg,
+                        color: theme.textPrimary,
+                      }}
+                    >
+                      View Specs
+                    </button>
+                    <button
+                      onClick={() => onAddToCart(heroProduct)}
+                      className="py-2.5 px-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center active:scale-95 shadow-sm"
+                      style={{
+                        backgroundColor: theme.accent,
+                        color: theme.accentText,
+                      }}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div 
+                className="rounded-2xl border p-3.5 sm:p-5 shadow-lg relative overflow-hidden"
+                style={{
+                  backgroundColor: theme.cardBg,
+                  borderColor: theme.border,
+                }}
+              >
+                <div className="relative aspect-4/3 rounded-xl overflow-hidden bg-zinc-950">
+                  <img
+                    src="/images/ak_sports_background.png"
+                    alt="AK Sports Official Flagship Showcase"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20" />
+                  <div 
+                    className="absolute top-3 left-3 px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-bold tracking-wider uppercase shadow-md"
+                    style={{
+                      backgroundColor: theme.accent,
+                      color: theme.accentText,
+                    }}
+                  >
+                    New Drop Coming Soon
+                  </div>
+                </div>
+                <div className="pt-4 space-y-2">
+                  <div className="flex items-center justify-between text-xs" style={{ color: theme.textMuted }}>
+                    <span>Main Outlet: Cantt Road, Bahawalnagar</span>
+                    <span className="font-semibold" style={{ color: theme.accent }}>Factory: Sialkot</span>
+                  </div>
+                  <h3 className="font-display font-bold text-base sm:text-lg" style={{ color: theme.textPrimary }}>
+                    AK Sports — Official Storefront
+                  </h3>
+                  <p className="text-xs leading-relaxed" style={{ color: theme.textMuted }}>
+                    New collection items are being uploaded shortly. Reach out on WhatsApp for custom bat weights or apparel inquiries.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
         </div>
