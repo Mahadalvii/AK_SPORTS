@@ -34,7 +34,7 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Minimalist Kicker */}
             <div className="inline-flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-semibold tracking-wider uppercase" style={{ color: theme.accent }}>
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Contemporary Apparel · Tape Ball &amp; Hard Ball Cricket</span>
+              <span>AK SPORTS - THE NAME OF QUALITY</span>
             </div>
 
             {/* Headline with responsive sizing */}
@@ -97,44 +97,26 @@ export const Hero: React.FC<HeroProps> = ({
               </button>
             </div>
 
-            {/* Proof Points Strip: Responsive 2x2 grid */}
+            {/* Proof Points Strip */}
             <div 
-              className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 sm:pt-6 border-t"
+              className="grid grid-cols-2 gap-3 sm:gap-6 pt-4 sm:pt-6 border-t max-w-lg"
               style={{ borderColor: theme.border }}
             >
               <div className="p-2 sm:p-0 rounded-lg bg-black/2 sm:bg-transparent">
                 <span className="font-display font-bold text-base sm:text-lg tabular-nums block" style={{ color: theme.accent }}>
-                  4-Way Flex
+                  7 Days Refund Policy
                 </span>
                 <span className="text-[11px] sm:text-xs text-zinc-600 block">
-                  Stretch Trousers
+                  Hassle-Free Guarantee
                 </span>
               </div>
 
               <div className="p-2 sm:p-0 rounded-lg bg-black/2 sm:bg-transparent">
                 <span className="font-display font-bold text-base sm:text-lg tabular-nums block" style={{ color: theme.accent }}>
-                  280 GSM
+                  Verified Quality
                 </span>
                 <span className="text-[11px] sm:text-xs text-zinc-600 block">
-                  Combed Heavy Cotton
-                </span>
-              </div>
-
-              <div className="p-2 sm:p-0 rounded-lg bg-black/2 sm:bg-transparent">
-                <span className="font-display font-bold text-base sm:text-lg tabular-nums block" style={{ color: theme.accent }}>
-                  48mm Edges
-                </span>
-                <span className="text-[11px] sm:text-xs text-zinc-600 block">
-                  Tape Ball Bats
-                </span>
-              </div>
-
-              <div className="p-2 sm:p-0 rounded-lg bg-black/2 sm:bg-transparent">
-                <span className="font-display font-bold text-base sm:text-lg tabular-nums block" style={{ color: theme.accent }}>
-                  100% COD
-                </span>
-                <span className="text-[11px] sm:text-xs text-zinc-600 block">
-                  Pay at Doorstep
+                  Trusted Craftsmanship
                 </span>
               </div>
             </div>

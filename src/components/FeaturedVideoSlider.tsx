@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, ChevronLeft, ChevronRight, Volume2, VolumeX, Eye, Sparkles, ShoppingCart, X } from 'lucide-react';
+import { Play, ChevronLeft, ChevronRight, Volume2, VolumeX, ShoppingCart, X } from 'lucide-react';
 import { VideoSlide, Product, ThemeConfig } from '../types';
 
 interface FeaturedVideoSliderProps {
@@ -48,7 +48,7 @@ export const FeaturedVideoSlider: React.FC<FeaturedVideoSliderProps> = ({
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: theme.accent }} />
           <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider" style={{ color: theme.accent }}>
-            Featured Drops &amp; Video Demonstrations
+            Our most selling articles
           </span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -124,11 +124,6 @@ export const FeaturedVideoSlider: React.FC<FeaturedVideoSliderProps> = ({
           {/* Right Column: Editorial Details & Instant Shop Action */}
           <div className="lg:col-span-5 p-4 sm:p-6 lg:p-8 flex flex-col justify-between space-y-4 sm:space-y-6">
             <div className="space-y-2 sm:space-y-3">
-              <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold" style={{ color: theme.accent }}>
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Featured Campaign Drop</span>
-              </div>
-
               <h3 className="font-display text-lg sm:text-2xl lg:text-3xl font-bold tracking-tight leading-tight" style={{ color: theme.textPrimary }}>
                 {currentSlide.title}
               </h3>
@@ -193,7 +188,7 @@ export const FeaturedVideoSlider: React.FC<FeaturedVideoSliderProps> = ({
                       color: theme.accentText,
                     }}
                   >
-                    {currentSlide.buttonLabel}
+                    Shop
                   </button>
                 )}
                 <button

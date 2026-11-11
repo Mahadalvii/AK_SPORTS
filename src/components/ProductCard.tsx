@@ -112,9 +112,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 </span>
               )}
             </div>
-            <span className="text-[9px] sm:text-[10px] text-zinc-400 hidden sm:block">
-              Cash on delivery
-            </span>
           </div>
 
           <button

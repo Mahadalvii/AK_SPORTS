@@ -120,21 +120,13 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
 
                 {/* Emotional Story Headline */}
                 <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-zinc-900 leading-snug">
-                  "I didn't start this brand to do business. I started it because cricket is my whole life."
+                  "I didn't build a company; I built a tribute to the game that raised me"
                 </h2>
 
                 {/* Narrative: Natural, Humanized, Emotional */}
                 <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-zinc-600">
                   <p>
-                    Ever since I was a young boy, every evening of my life was spent on local dusty pitches, running with a taped tennis ball in hand, dreaming of the perfect stroke. Cricket was never just a weekend hobby for me—it was my obsession, my sanctuary, and my identity.
-                  </p>
-
-                  <p>
-                    As a competitive local player myself, I know the heartbreak every cricketer feels: buying an expensive bat with hard-earned money, only for it to feel dead in the hands, poorly balanced, or snap when you need it most. I knew tape ball players deserved something real—crafted with honesty, heart, and respect for their game.
-                  </p>
-
-                  <p>
-                    That is why I created <strong>AK Sports</strong>. We personally import hand-selected raw cricket wood directly from Sri Lanka, craft it with precision at our Sialkot factory unit, and inspect every finished blade at our main outlet in Bahawalnagar. There, each blade is shaped, balanced, pressed, and refined with 48mm+ massive edges and feather-light pickup—tailoring it to each player’s personal budget and stroke style, without any corporate middleman markups.
+                    I know the heartbreak of buying an expensive bat only for it to feel dead in your hands. After years of playing tape ball, I decided to fix that. At <strong>AK Sports</strong>, we cut out the corporate middlemen. We hand-select Sri Lankan wood, build the bats in our Sialkot factory, and inspect every single one at our Bahawalnagar outlet. You get exactly what you need: 48mm+ edges, perfect balance, and honest craftsmanship.
                   </p>
                 </div>
 
@@ -156,7 +148,7 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
                     backgroundColor: theme.accent,
                   }}
                 >
-                  <span>Explore Handcrafted Bats</span>
+                  <span>Explore</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
@@ -169,7 +161,7 @@ export const BrandStory: React.FC<BrandStoryProps> = ({ theme, onNavigateToCateg
                     borderColor: theme.border,
                   }}
                 >
-                  <span>A Peek into Saad's Life (Facebook)</span>
+                  <span>Saad's Journey</span>
                   <ExternalLink className="w-3.5 h-3.5 text-[#b89428]" />
                 </a>
 

@@ -58,7 +58,7 @@ export const FEATURED_VIDEO_SLIDES: VideoSlide[] = [
     thumbnailUrl: '/images/products/clothing_athletic_trousers_1794058288601.jpg',
     videoTitle: 'Product Video: 4-Way Stretch Elasticity & Fit Demonstration',
     productTargetId: 'ak-apparel-pro-trousers',
-    buttonLabel: 'Shop Athletic Trousers',
+    buttonLabel: 'Shop',
     viewsCount: '14.2K views',
   },
   {
@@ -70,7 +70,7 @@ export const FEATURED_VIDEO_SLIDES: VideoSlide[] = [
     thumbnailUrl: '/images/products/cricket_bat_gold_pro_1794057613027.jpg',
     videoTitle: 'Ping Sound & Feather Pickup Demonstration (820g)',
     productTargetId: 'ak-bat-gold-edition',
-    buttonLabel: 'Shop Gold Edition Bat',
+    buttonLabel: 'Shop',
     viewsCount: '28.6K views',
   },
   {
@@ -82,7 +82,7 @@ export const FEATURED_VIDEO_SLIDES: VideoSlide[] = [
     thumbnailUrl: '/images/products/clothing_oversized_tee_1794058288633.jpg',
     videoTitle: 'Fit Check & Fabric Drape: Daily Gym & Casual Styling',
     productTargetId: 'ak-apparel-oversized-tee',
-    buttonLabel: 'Shop Training Tee',
+    buttonLabel: 'Shop',
     viewsCount: '19.8K views',
   },
 ];

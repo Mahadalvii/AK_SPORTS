@@ -195,7 +195,7 @@ export default function App() {
                   <span>Curated High-Demand Drops</span>
                 </div>
                 <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight mt-1 text-zinc-900 leading-tight">
-                  Best Sellers &amp; Most High-Selling Items
+                  Hot Selling Products
                 </h2>
                 <p className="text-xs sm:text-sm text-zinc-600 mt-0.5">
                   Our top-volume performance athletic apparel and tournament cricket essentials.
