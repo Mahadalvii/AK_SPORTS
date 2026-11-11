@@ -374,11 +374,11 @@ export async function toggleProductActive(
 }
 
 /**
- * Delete a product permanently
+ * Delete a product permanently (or archive/hide if linked to existing orders)
  */
 export async function deleteAdminProduct(
   productId: string
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; archivedInstead?: boolean; error?: string }> {
   if (!isSupabaseConfigured() || !supabase) {
     const current = await getAdminProducts();
     const updated = current.filter(p => p.id !== productId);
@@ -392,30 +392,102 @@ export async function deleteAdminProduct(
     .eq('id', productId);
 
   if (error) {
+    const isFkError = error.code === '23503' || error.message.toLowerCase().includes('foreign key');
+    if (isFkError) {
+      // Product is referenced by past orders in order_items: hide from store instead
+      const { error: hideErr } = await supabase
+        .from('products')
+        .update({ is_active: false })
+        .eq('id', productId);
+
+      if (!hideErr) {
+        return {
+          success: true,
+          archivedInstead: true,
+          error: 'Product is linked to past orders so it was hidden from the public store instead of hard-deleted.',
+        };
+      }
+    }
     return { success: false, error: error.message };
   }
   return { success: true };
 }
 
 /**
- * Delete all products permanently from the catalog
+ * Delete all products permanently from the catalog (hides order-linked items if DB FK blocks hard delete)
  */
-export async function deleteAllAdminProducts(): Promise<{ success: boolean; error?: string }> {
+export async function deleteAllAdminProducts(): Promise<{
+  success: boolean;
+  deletedCount?: number;
+  archivedCount?: number;
+  error?: string;
+}> {
   if (!isSupabaseConfigured() || !supabase) {
     localStorage.setItem('ak_sports_admin_products', JSON.stringify([]));
-    return { success: true };
+    return { success: true, deletedCount: 0, archivedCount: 0 };
   }
 
-  const { error } = await supabase
+  localStorage.removeItem('ak_sports_admin_products');
+
+  // 1. Try fast bulk delete first
+  const { error: bulkError } = await supabase
     .from('products')
     .delete()
     .neq('id', '');
 
-  if (error) {
-    return { success: false, error: error.message };
+  if (!bulkError) {
+    return { success: true, archivedCount: 0 };
   }
-  localStorage.removeItem('ak_sports_admin_products');
-  return { success: true };
+
+  // 2. Fallback per-product delete (handles FK constraints on products referenced by past orders)
+  const { data: rows, error: listError } = await supabase
+    .from('products')
+    .select('id');
+
+  if (listError || !rows) {
+    return { success: false, error: bulkError.message || listError?.message };
+  }
+
+  let deletedCount = 0;
+  let archivedCount = 0;
+  let lastError: string | undefined;
+
+  for (const row of rows) {
+    const { error: delErr } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', row.id);
+
+    if (!delErr) {
+      deletedCount++;
+    } else {
+      const isFkError = delErr.code === '23503' || delErr.message.toLowerCase().includes('foreign key');
+      if (isFkError) {
+        const { error: hideErr } = await supabase
+          .from('products')
+          .update({ is_active: false })
+          .eq('id', row.id);
+        if (!hideErr) {
+          archivedCount++;
+        } else {
+          lastError = hideErr.message;
+        }
+      } else {
+        lastError = delErr.message;
+      }
+    }
+  }
+
+  if (deletedCount === 0 && archivedCount === 0 && rows.length > 0) {
+    return { success: false, error: lastError || bulkError.message };
+  }
+
+  return {
+    success: true,
+    deletedCount,
+    archivedCount,
+    error: lastError,
+  };
 }
 
 /**

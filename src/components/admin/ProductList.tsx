@@ -14,7 +14,8 @@ import {
   ExternalLink,
   Video,
   Loader2,
-  Database
+  AlertCircle,
+  CheckCircle2
 } from 'lucide-react';
 import { AdminProduct, deleteAllAdminProducts } from '../../lib/adminApi';
 
@@ -39,23 +40,33 @@ export const ProductList: React.FC<ProductListProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'hidden'>('all');
   const [isClearing, setIsClearing] = useState(false);
+  const [confirmClearAll, setConfirmClearAll] = useState(false);
   const [clearError, setClearError] = useState<string | null>(null);
+  const [clearSuccessMsg, setClearSuccessMsg] = useState<string | null>(null);
 
   const handleClearCatalog = async () => {
-    if (!window.confirm('Permanently delete ALL products from the website catalog? This cannot be undone.')) {
-      return;
-    }
     setIsClearing(true);
     setClearError(null);
+    setClearSuccessMsg(null);
     try {
       const res = await deleteAllAdminProducts();
       if (res.success) {
+        setConfirmClearAll(false);
+        if (res.archivedCount && res.archivedCount > 0) {
+          setClearSuccessMsg(
+            `Removed ${res.deletedCount || 0} products and hid ${res.archivedCount} products linked to past orders so they no longer appear on the store.`
+          );
+        } else {
+          setClearSuccessMsg('All products have been permanently deleted from your catalog.');
+        }
         onReload();
       } else {
-        setClearError(res.error || 'Failed to delete all products');
+        setConfirmClearAll(false);
+        setClearError(res.error || 'Failed to delete all products.');
       }
     } catch (err: any) {
-      setClearError(err.message || 'Error deleting all products');
+      setConfirmClearAll(false);
+      setClearError(err.message || 'Error deleting all products.');
     } finally {
       setIsClearing(false);
     }
@@ -105,30 +116,49 @@ export const ProductList: React.FC<ProductListProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           {products.length > 0 && (
-            <button
-              onClick={handleClearCatalog}
-              disabled={isClearing}
-              className="px-3.5 py-2.5 rounded-xl text-xs font-semibold border border-rose-800/70 hover:border-rose-500 bg-rose-950/40 text-rose-300 hover:text-rose-200 transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
-              title="Delete all products from the catalog"
-            >
-              {isClearing ? (
-                <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  <span>Deleting...</span>
-                </>
-              ) : (
-                <>
-                  <Trash2 className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Delete All Products</span>
-                  <span className="sm:hidden">Delete All</span>
-                </>
-              )}
-            </button>
+            confirmClearAll ? (
+              <div className="flex items-center gap-1.5 bg-rose-950/60 border border-rose-700 px-2.5 py-1.5 rounded-xl">
+                <span className="text-[11px] font-semibold text-rose-200 hidden sm:inline">Delete all {products.length} items?</span>
+                <button
+                  type="button"
+                  onClick={handleClearCatalog}
+                  disabled={isClearing}
+                  className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-rose-600 hover:bg-rose-500 text-white cursor-pointer disabled:opacity-50 flex items-center gap-1"
+                >
+                  {isClearing ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}
+                  <span>{isClearing ? 'Deleting...' : 'Confirm'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setConfirmClearAll(false)}
+                  disabled={isClearing}
+                  className="px-2 py-1 rounded-lg text-[11px] font-semibold text-zinc-300 hover:text-white cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setClearError(null);
+                  setClearSuccessMsg(null);
+                  setConfirmClearAll(true);
+                }}
+                className="px-3.5 py-2.5 rounded-xl text-xs font-semibold border border-rose-800/70 hover:border-rose-500 bg-rose-950/40 text-rose-300 hover:text-rose-200 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                title="Delete all products from the catalog"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Delete All Products</span>
+                <span className="sm:hidden">Delete All</span>
+              </button>
+            )
           )}
 
           <button
+            type="button"
             onClick={onAddNew}
             className="px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#d4af37] hover:bg-[#c29e2f] text-black transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer active:scale-95 shrink-0"
           >
@@ -137,6 +167,24 @@ export const ProductList: React.FC<ProductListProps> = ({
           </button>
         </div>
       </div>
+
+      {/* Bulk Clear Feedback Banners */}
+      {clearError && (
+        <div className="p-3.5 rounded-xl border border-rose-800 bg-rose-950/60 text-rose-200 text-xs flex items-start gap-2.5">
+          <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+          <div>
+            <span className="font-bold block">Could not delete all products:</span>
+            <span>{clearError}</span>
+          </div>
+        </div>
+      )}
+
+      {clearSuccessMsg && (
+        <div className="p-3.5 rounded-xl border border-emerald-800 bg-emerald-950/60 text-emerald-200 text-xs flex items-start gap-2.5">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+          <span>{clearSuccessMsg}</span>
+        </div>
+      )}
 
       {/* Filter and Search Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
@@ -197,11 +245,6 @@ export const ProductList: React.FC<ProductListProps> = ({
               All previous showcase products have been cleared. Click below to add your new products—they will automatically appear live on the storefront.
             </p>
           </div>
-          {clearError && (
-            <div className="text-xs text-rose-400 bg-rose-950/60 p-2.5 rounded-xl border border-rose-800 max-w-md mx-auto">
-              {clearError}
-            </div>
-          )}
           <div className="pt-2">
             <button
               onClick={onAddNew}

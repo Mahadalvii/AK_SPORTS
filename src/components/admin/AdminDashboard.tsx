@@ -166,8 +166,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToStore })
       onConfirm: async () => {
         const res = await deleteAdminProduct(prod.id);
         if (res.success) {
-          setProducts(prev => prev.filter(p => p.id !== prod.id));
-          showToast(`Permanently deleted product "${prod.name}".`);
+          if (res.archivedInstead) {
+            setProducts(prev => prev.map(p => p.id === prod.id ? { ...p, is_active: false } : p));
+            showToast(`"${prod.name}" has past orders, so it was hidden from the public store.`);
+          } else {
+            setProducts(prev => prev.filter(p => p.id !== prod.id));
+            showToast(`Permanently deleted product "${prod.name}".`);
+          }
         } else {
           showToast(res.error || 'Failed to delete product.', 'error');
         }
